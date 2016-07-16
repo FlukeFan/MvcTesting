@@ -1,0 +1,13 @@
+
+*/bin
+*/obj
+*/*.csproj.user
+*.suo
+*.sln.cache
+/.vs
+
+_build/AssemblyInfo.cs
+
+/.vs
+/packaged
+

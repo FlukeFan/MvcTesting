@@ -1,0 +1,6 @@
+﻿<NUnitProject>
+  <Settings activeconfig="Debug" />
+  <Config name="Debug" binpathtype="Auto">
+    <assembly path="..\MvcTesting.Tests\bin\Debug\MvcTesting.Tests.dll" />
+  </Config>
+</NUnitProject>

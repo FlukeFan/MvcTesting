@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$id$</title>
+    <description>A library to test (pre core) Asp.Net Mvc applications from request through to (HTML) response.</description>
+    <tags>Asp.Net Mvc Testing Tests Razor</tags>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <authors>Richard Brown</authors>
+    <licenseUrl>https://raw.githubusercontent.com/FlukeFan/MvcTesting/master/LICENSE.txt</licenseUrl>
+    <projectUrl>https://github.com/FlukeFan/MvcTesting</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/FlukeFan/MvcTesting/master/icon.png</iconUrl>
+  </metadata>
+</package>

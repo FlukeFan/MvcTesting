@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcTesting", "MvcTesting\MvcTesting.csproj", "{D978D4CE-502D-4328-BBCC-696C7F1465E8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_items", "_items", "{4F4EE83C-D1CE-4D14-8A64-32E58FDC7363}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		CommandPrompt.bat = CommandPrompt.bat
+		LICENSE.txt = LICENSE.txt
+		MvcTesting.proj = MvcTesting.proj
+		readme.txt = readme.txt
+		RunNUnit.bat = RunNUnit.bat
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_build", "_build", "{9B74B852-4D36-48E8-ADAE-064DB9841032}"
+	ProjectSection(SolutionItems) = preProject
+		_build\Common.targets = _build\Common.targets
+		_build\MvcTesting.nunit = _build\MvcTesting.nunit
+		_build\VerifyCoverage.js = _build\VerifyCoverage.js
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D978D4CE-502D-4328-BBCC-696C7F1465E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D978D4CE-502D-4328-BBCC-696C7F1465E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D978D4CE-502D-4328-BBCC-696C7F1465E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D978D4CE-502D-4328-BBCC-696C7F1465E8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9B74B852-4D36-48E8-ADAE-064DB9841032} = {4F4EE83C-D1CE-4D14-8A64-32E58FDC7363}
+	EndGlobalSection
+EndGlobal

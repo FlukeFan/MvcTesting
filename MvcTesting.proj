@@ -1,0 +1,95 @@
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://MSBuild/Community/Tasks packages\MSBuildTasks.1.5.0.196\tools\MSBuild.Community.Tasks.xsd">
+
+  <PropertyGroup>
+    <MSBuildCommunityTasksPath>$(MSBuildProjectDirectory)\packages\MSBuildTasks.1.5.0.196\tools</MSBuildCommunityTasksPath>
+  </PropertyGroup>
+
+  <Import Project="_build\Common.targets" />
+  <Import Project="$(MSBuildCommunityTasksPath)\MSBuild.Community.Tasks.Targets" />
+
+  <PropertyGroup>
+    <SolutionDir>$(MSBuildProjectDirectory)\</SolutionDir>
+    <RunTests Condition=" '$(RunTests)' == '' ">true</RunTests>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <MSBuildXsd Include="lib\MSBuild\*.xsd" />
+  </ItemGroup>
+
+  <Target Name="Init">
+    <CreateProperty Value="Configuration=$(Configuration);RunTests=$(RunTests);NuGetExe=$(NuGetExe);DeployBuild=$(AppHarbor)">
+      <Output TaskParameter="Value" PropertyName="GlobalProperties" />
+    </CreateProperty>
+    <Copy SourceFiles="@(MSBuildXsd)" DestinationFolder="$(MSBuildCommunityTasksPath)" />
+  </Target>
+
+  <Target Name="SetReleaseConfiguration">
+    <CreateProperty Value="Release">
+      <Output TaskParameter="Value" PropertyName="Configuration" />
+    </CreateProperty>
+  </Target>
+
+  <Target Name="SetDebugConfiguration">
+    <CreateProperty Value="Debug">
+      <Output TaskParameter="Value" PropertyName="Configuration" />
+    </CreateProperty>
+  </Target>
+
+  <Target Name="Build" DependsOnTargets="Init">
+    <CallTarget Targets="GenerateAssemblyInfo" />
+    <MakeDir Directories="packaged" />
+    <MSBuild Projects="@(ProjectsToBuild)" Properties="$(GlobalProperties)" RunEachTargetSeparately="True" StopOnFirstFailure="True" />
+  </Target>
+
+  <Target Name="Clean">
+    <MSBuild Projects="$(MSBuildProjectFile)" Targets="CleanFilesInit" Properties="Configuration=Debug" />
+    <MSBuild Projects="$(MSBuildProjectFile)" Targets="CleanFilesInit" Properties="Configuration=Release" />
+  </Target>
+
+  <Target Name="CleanFilesInit">
+    <CallTarget Targets="Init" />
+    <CallTarget Targets="CleanFiles" />
+  </Target>
+  
+  <Target Name="CleanFiles">
+    <MSBuild Projects="@(ProjectsToClean)" Properties="$(GlobalProperties)" RunEachTargetSeparately="True" StopOnFirstFailure="True" Targets="Clean" />
+    <RemoveDir Directories="packaged" />
+    <Delete Files="AssemblyInfo.cs" />
+  </Target>
+
+  <ItemGroup>
+    <ProjectsToBuild Include="MvcTesting\MvcTesting.csproj"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectsToClean Include="MvcTesting\MvcTesting.csproj"/>
+  </ItemGroup>
+
+  <Target Name="GenerateAssemblyInfo" Inputs="_build\Common.targets" Outputs="_build\AssemblyInfo.cs">
+    <RemoveDir Directories="packaged" />
+    <RemoveDir Directories="Demo\packages" Condition="'$(AppHarbor)' != 'true'" />
+    <AssemblyInfo
+      CodeLanguage="CS"
+      AssemblyDescription="MvcTesting"
+      AssemblyTitle="MvcTesting"
+      AssemblyProduct="MvcTesting $(Configuration) $(Version)"
+      AssemblyVersion="$(Version)"
+      OutputFile="_build\AssemblyInfo.cs"
+      />
+  </Target>
+  
+  <Target Name="SetApiKey">
+    <Exec Command="$(NuGetExe) setApiKey $(apiKey) -Source nuget.org" />
+  </Target>
+
+  <Target Name="Push">
+    <RemoveDir Directories="packaged" />
+    <CallTarget Targets="SetReleaseConfiguration" />
+    <CallTarget Targets="Init" />
+    <CallTarget Targets="Build" />
+    <Exec Command="$(NuGetExe) push packaged\MvcTesting.$(Version).nupkg -Source nuget.org -NonInteractive" />
+    <CallTarget Targets="Clean" />
+  </Target>
+
+</Project>
