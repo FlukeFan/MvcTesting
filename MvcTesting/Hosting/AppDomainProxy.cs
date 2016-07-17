@@ -5,13 +5,6 @@ namespace Lucid.Web.Testing.Hosting
 {
     public class AppDomainProxy : MarshalByRefObject
     {
-        public static Action OnBeforeStartWebHost = () => { };
-
-        public AppDomainProxy()
-        {
-            OnBeforeStartWebHost();
-        }
-
         public void RunCodeInAppDomain(Action codeToRun)
         {
             codeToRun();
