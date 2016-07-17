@@ -192,5 +192,20 @@ namespace MvcTesting.Tests.Hosting
                 File.Exists(flagFile).Should().BeFalse();
             }
         }
+
+        [Test]
+        public void CanWriteToConsole()
+        {
+            using (var app = AspNetTestHost.For(_web, "/", TimeSpan.FromSeconds(15)))
+            {
+                app.Test(http =>
+                {
+                    http.ConsoleWriter.Write("Hello ");
+                    http.ConsoleWriter.WriteLine("World");
+
+                    // how to test this actually wrote to the console
+                });
+            }
+        }
     }
 }

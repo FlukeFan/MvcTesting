@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <TestDependencies Include="$(OutDir)\$(AssemblyName).dll" />
+    <TestDependencies Include="CoverageFilter.txt" />
   </ItemGroup>
 
   <ItemGroup>
