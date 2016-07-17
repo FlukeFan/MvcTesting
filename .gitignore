@@ -8,7 +8,7 @@
 
 _build/AssemblyInfo.cs
 _build/MvcTesting.VisualState.xml
+_build/TestResult.xml
 
 /.vs
 /packaged
-
