@@ -4,7 +4,10 @@
     <id>$id$</id>
     <version>$version$</version>
     <title>$id$</title>
-    <description>A library to test (pre core) Asp.Net Mvc applications from request through to (HTML) response.</description>
+    <description>
+      A library to test (pre core) Asp.Net Mvc applications from request through to (HTML) response.
+      Heavily based on http://blog.stevensanderson.com/2009/06/11/integration-testing-your-aspnet-mvc-application/
+    </description>
     <tags>Asp.Net Mvc Testing Tests Razor</tags>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <authors>Richard Brown</authors>

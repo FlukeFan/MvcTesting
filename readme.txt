@@ -3,6 +3,7 @@ MvcTesting
 ==========
 
 A library to test (pre core) Asp.Net Mvc applications from request through to (HTML) response.
+Heavily based on http://blog.stevensanderson.com/2009/06/11/integration-testing-your-aspnet-mvc-application/
 
 Building
 ========
