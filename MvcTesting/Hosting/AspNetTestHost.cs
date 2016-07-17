@@ -13,7 +13,7 @@ namespace MvcTesting.Hosting
     // http://blog.stevensanderson.com/2009/06/11/integration-testing-your-aspnet-mvc-application/
     public class AspNetTestHost : IDisposable
     {
-        public const string     RunningFlagFile = "AspNetTestHost.running.txt";
+        public const string     RunningFlagFile = "MvcTestingAspNetTestHost.running.txt";
 
         private bool            _disposed;
         private Semaphore       _enforceSingleInstance;
@@ -37,7 +37,7 @@ namespace MvcTesting.Hosting
             security.AddAccessRule(new SemaphoreAccessRule("Everyone", SemaphoreRights.FullControl, AccessControlType.Allow));
 
             bool createdNew_notUsed;
-            var semaphoreName = "Global\\LucidAspNetTestHost" + PhysicalDirectory.GetHashCode();
+            var semaphoreName = "Global\\MvcTestingAspNetTestHost" + PhysicalDirectory.GetHashCode();
             _enforceSingleInstance = new Semaphore(1, 1, semaphoreName, out createdNew_notUsed, security);
 
             try

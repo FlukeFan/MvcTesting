@@ -22,6 +22,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_build", "_build", "{9B74B8
 		_build\VerifyCoverage.js = _build\VerifyCoverage.js
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcTesting.Tests", "MvcTesting.Tests\MvcTesting.Tests.csproj", "{88B9412E-42A0-4FFD-AA41-6F0CAA93B318}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,6 +34,10 @@ Global
 		{D978D4CE-502D-4328-BBCC-696C7F1465E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D978D4CE-502D-4328-BBCC-696C7F1465E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D978D4CE-502D-4328-BBCC-696C7F1465E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88B9412E-42A0-4FFD-AA41-6F0CAA93B318}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88B9412E-42A0-4FFD-AA41-6F0CAA93B318}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88B9412E-42A0-4FFD-AA41-6F0CAA93B318}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88B9412E-42A0-4FFD-AA41-6F0CAA93B318}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
