@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace Lucid.Web.Testing.Hosting
+namespace MvcTesting.Hosting
 {
     public class CaptureResultFilter : ActionFilterAttribute
     {

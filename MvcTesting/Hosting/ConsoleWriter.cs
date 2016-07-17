@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Lucid.Web.Testing.Hosting
+namespace MvcTesting.Hosting
 {
     public class ConsoleWriter : MarshalByRefObject
     {

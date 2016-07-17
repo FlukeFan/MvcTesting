@@ -3,7 +3,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Net;
 
-namespace Lucid.Web.Testing.Http
+namespace MvcTesting.Http
 {
     public class Request
     {

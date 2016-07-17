@@ -2,7 +2,7 @@
 using System.Net;
 using System.Runtime.Serialization;
 
-namespace Lucid.Web.Testing.Http
+namespace MvcTesting.Http
 {
     [Serializable]
     public class UnexpectedStatusCodeException : Exception

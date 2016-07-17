@@ -1,6 +1,6 @@
 ﻿using System.Web;
 
-namespace Lucid.Web.Testing.Http
+namespace MvcTesting.Http
 {
     public class NameValue
     {

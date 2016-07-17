@@ -2,7 +2,7 @@
 using System.Linq.Expressions;
 using System.Web.Mvc;
 
-namespace Lucid.Web.Testing.Html
+namespace MvcTesting.Html
 {
     public static class TypedFormExtensions
     {

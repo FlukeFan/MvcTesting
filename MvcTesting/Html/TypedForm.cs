@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Lucid.Web.Testing.Http;
+using MvcTesting.Http;
 
-namespace Lucid.Web.Testing.Html
+namespace MvcTesting.Html
 {
     public class TypedForm<T>
     {

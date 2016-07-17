@@ -1,7 +1,7 @@
 ﻿using System;
-using Lucid.Web.Testing.Http;
+using MvcTesting.Http;
 
-namespace Lucid.Web.Testing.Hosting
+namespace MvcTesting.Hosting
 {
     public class AppDomainProxy : MarshalByRefObject
     {

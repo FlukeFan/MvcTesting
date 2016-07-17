@@ -2,9 +2,9 @@
 using System.Net;
 using System.Web.Mvc;
 using AngleSharp.Parser.Html;
-using Lucid.Web.Testing.Html;
+using MvcTesting.Html;
 
-namespace Lucid.Web.Testing.Http
+namespace MvcTesting.Http
 {
     [Serializable]
     public class Response

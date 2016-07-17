@@ -5,9 +5,9 @@ using System.Security.AccessControl;
 using System.Threading;
 using System.Web;
 using System.Web.Hosting;
-using Lucid.Web.Testing.Http;
+using MvcTesting.Http;
 
-namespace Lucid.Web.Testing.Hosting
+namespace MvcTesting.Hosting
 {
     // borrowed from an excellent post on testing asp.net:
     // http://blog.stevensanderson.com/2009/06/11/integration-testing-your-aspnet-mvc-application/

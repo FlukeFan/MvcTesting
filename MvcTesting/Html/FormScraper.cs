@@ -1,4 +1,4 @@
-﻿namespace Lucid.Web.Testing.Html
+﻿namespace MvcTesting.Html
 {
     public class FormScraper
     {

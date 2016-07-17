@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
 using System.Web;
-using Lucid.Web.Testing.Hosting;
+using MvcTesting.Hosting;
 
-namespace Lucid.Web.Testing.Http
+namespace MvcTesting.Http
 {
     public interface ISimulatedHttpClient
     {

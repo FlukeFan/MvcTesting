@@ -1,6 +1,6 @@
 ﻿using AngleSharp.Dom.Html;
 
-namespace Lucid.Web.Testing.Html
+namespace MvcTesting.Html
 {
     public class DocumentWrapper : ParentNodeWrapper
     {
