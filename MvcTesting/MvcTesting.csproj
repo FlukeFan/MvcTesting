@@ -76,7 +76,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\_build\AssemblyInfo.cs" />
+    <Compile Include="..\_output\AssemblyInfo.cs" />
     <Compile Include="Hosting\AppDomainProxy.cs" />
     <Compile Include="Hosting\AspNetTestHost.cs" />
     <Compile Include="Hosting\CaptureResultFilter.cs" />
@@ -104,14 +104,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\_build\Common.targets" />
+  <Import Project="..\Build\Common.targets" />
   <ItemGroup>
     <PackageDependencies Include="bin\$(Configuration)\$(AssemblyName).dll">
       <InProject>False</InProject>
     </PackageDependencies>
   </ItemGroup>
-  <Target Name="Package" Inputs="@(PackageDependencies)" Outputs="..\packaged\$(AssemblyName).$(Version).nupkg">
-    <Exec Command="$(NuGetExe) pack $(MSBuildProjectFile) -OutputDirectory ..\packaged -Properties Configuration=$(Configuration);OutDir=$(OutDir)" />
+  <Target Name="Package" Inputs="@(PackageDependencies)" Outputs="..\_output\$(AssemblyName).$(Version).nupkg">
+    <Exec Command="$(NuGetExe) pack $(MSBuildProjectFile) -OutputDirectory ..\_output -Properties Configuration=$(Configuration);OutDir=$(OutDir)" />
   </Target>
   <Target Name="AfterBuild">
     <CallTarget Targets="Package" />

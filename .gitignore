@@ -6,9 +6,6 @@
 *.sln.cache
 /.vs
 
-_build/AssemblyInfo.cs
-_build/MvcTesting.VisualState.xml
-_build/TestResult.xml
-
-/.vs
-/packaged
+/_output
+/Build/Reposify.VisualState.xml
+/Build/TestResult.xml

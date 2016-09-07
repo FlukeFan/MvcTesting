@@ -4,7 +4,7 @@
     <MSBuildCommunityTasksPath>$(MSBuildProjectDirectory)\packages\MSBuildTasks.1.5.0.196\tools</MSBuildCommunityTasksPath>
   </PropertyGroup>
 
-  <Import Project="_build\Common.targets" />
+  <Import Project="Build\Common.targets" />
   <Import Project="$(MSBuildCommunityTasksPath)\MSBuild.Community.Tasks.Targets" />
 
   <PropertyGroup>
@@ -38,7 +38,6 @@
 
   <Target Name="Build" DependsOnTargets="Init">
     <CallTarget Targets="GenerateAssemblyInfo" />
-    <MakeDir Directories="packaged" />
     <MSBuild Projects="@(ProjectsToBuild)" Properties="$(GlobalProperties)" RunEachTargetSeparately="True" StopOnFirstFailure="True" />
   </Target>
 
@@ -54,8 +53,7 @@
   
   <Target Name="CleanFiles">
     <MSBuild Projects="@(ProjectsToClean)" Properties="$(GlobalProperties)" RunEachTargetSeparately="True" StopOnFirstFailure="True" Targets="Clean" />
-    <RemoveDir Directories="packaged" />
-    <Delete Files="AssemblyInfo.cs" />
+    <RemoveDir Directories="_output" />
   </Target>
 
   <ItemGroup>
@@ -68,16 +66,15 @@
     <ProjectsToClean Include="MvcTesting\MvcTesting.csproj"/>
   </ItemGroup>
 
-  <Target Name="GenerateAssemblyInfo" Inputs="_build\Common.targets" Outputs="_build\AssemblyInfo.cs">
-    <RemoveDir Directories="packaged" />
-    <RemoveDir Directories="Demo\packages" Condition="'$(AppHarbor)' != 'true'" />
+  <Target Name="GenerateAssemblyInfo" Inputs="Build\Common.targets" Outputs="_output\AssemblyInfo.cs">
+    <MakeDir Directories="_output" />
     <AssemblyInfo
       CodeLanguage="CS"
       AssemblyDescription="MvcTesting"
       AssemblyTitle="MvcTesting"
       AssemblyProduct="MvcTesting $(Configuration) $(Version)"
       AssemblyVersion="$(Version)"
-      OutputFile="_build\AssemblyInfo.cs"
+      OutputFile="_output\AssemblyInfo.cs"
       />
   </Target>
   
@@ -86,11 +83,11 @@
   </Target>
 
   <Target Name="Push">
-    <RemoveDir Directories="packaged" />
+    <RemoveDir Directories="_output" />
     <CallTarget Targets="SetReleaseConfiguration" />
     <CallTarget Targets="Init" />
     <CallTarget Targets="Build" />
-    <Exec Command="$(NuGetExe) push packaged\MvcTesting.$(Version).nupkg -Source nuget.org -NonInteractive" />
+    <Exec Command="$(NuGetExe) push _output\MvcTesting.$(Version).nupkg -Source nuget.org -NonInteractive" />
     <CallTarget Targets="Clean" />
   </Target>
 
