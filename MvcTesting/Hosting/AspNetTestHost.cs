@@ -18,7 +18,6 @@ namespace MvcTesting.Hosting
         private bool            _disposed;
         private Semaphore       _enforceSingleInstance;
         private AppDomainProxy  _appDomainProxy;
-        private List<Action>    _deleteActions = new List<Action>();
 
         public string PhysicalDirectory { get; protected set; }
 
@@ -48,10 +47,9 @@ namespace MvcTesting.Hosting
                 if (!Directory.Exists(PhysicalDirectory))
                     throw new Exception("Could not find directory: " + PhysicalDirectory);
 
-                CopyTestBinaries(PhysicalDirectory);
+                CopyTestBinaries();
                 _appDomainProxy = (AppDomainProxy)ApplicationHost.CreateApplicationHost(appDomainProxyType, virtualDirectory, PhysicalDirectory);
                 _appDomainProxy.RunCodeInAppDomain(() => InitHost());
-
             }
             catch
             {
@@ -85,11 +83,6 @@ namespace MvcTesting.Hosting
         public static AspNetTestHost For(string physicalDirectory, string virtualDirectory, TimeSpan timeout, Type appDomainProxyType)
         {
             return new AspNetTestHost(physicalDirectory, virtualDirectory, timeout, appDomainProxyType);
-        }
-
-        private void CurrentDomain_DomainUnload(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
         }
 
         public void Test(Action<SimulatedHttpClient> testAction)
@@ -132,9 +125,9 @@ namespace MvcTesting.Hosting
             _disposed = true;
         }
 
-        private void CopyTestBinaries(string webDir)
+        private void CopyTestBinaries()
         {
-            var webBinDir = Path.Combine(webDir, "bin");
+            var webBinDir = Path.Combine(PhysicalDirectory, "bin");
             var testBinDir = AppDomain.CurrentDomain.BaseDirectory;
             var runningFlagFile = Path.Combine(webBinDir, RunningFlagFile);
 
@@ -142,11 +135,12 @@ namespace MvcTesting.Hosting
                 throw new Exception("Could not find bin directory: " + webBinDir);
 
             if (File.Exists(runningFlagFile))
-                throw new Exception("Previous instance of AspNetTestHosts was not cleanly disposed - you might need to clean/rebuild your web folder");
+                DeleteTestBinaries();
 
             AppDomain.CurrentDomain.DomainUnload += (s, e) => Dispose();
 
-            File.WriteAllText(runningFlagFile, "AspNetTestHost running");
+            var sourceFiles = new List<string>();
+            var destinationFiles = new List<string>();
 
             foreach (var srcFile in Directory.GetFiles(testBinDir))
             {
@@ -155,18 +149,32 @@ namespace MvcTesting.Hosting
 
                 if (!File.Exists(destFile))
                 {
-                    _deleteActions.Add(() => File.Delete(destFile));
-                    File.Copy(srcFile, destFile);
+                    sourceFiles.Add(srcFile);
+                    destinationFiles.Add(destFile);
                 }
             }
 
-            _deleteActions.Add(() => File.Delete(runningFlagFile));
+            File.WriteAllLines(runningFlagFile, destinationFiles);
+
+            for (var i = 0; i < sourceFiles.Count; i++)
+                File.Copy(sourceFiles[i], destinationFiles[i]);
         }
 
         private void DeleteTestBinaries()
         {
-            _deleteActions.ForEach(deleteAction => deleteAction());
-            _deleteActions.Clear();
+            var webBinDir = Path.Combine(PhysicalDirectory, "bin");
+            var runningFlagFile = Path.Combine(webBinDir, RunningFlagFile);
+
+            if (!File.Exists(runningFlagFile))
+                return;
+
+            var filesToDelete = File.ReadAllLines(runningFlagFile);
+
+            foreach (var file in filesToDelete)
+                if (File.Exists(file))
+                    File.Delete(file);
+
+            File.Delete(runningFlagFile);
         }
     }
 }

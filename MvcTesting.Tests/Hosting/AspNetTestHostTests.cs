@@ -88,14 +88,21 @@ namespace MvcTesting.Tests.Hosting
         {
             var webBinPath = Path.GetFullPath(_webBin);
             var flagFile = Path.Combine(webBinPath, AspNetTestHost.RunningFlagFile);
+            var previousCopiedFile = Path.Combine(webBinPath, "copied.txt");
 
             try
             {
-                File.WriteAllText(flagFile, "simulating instance already running");
-                Assert.That(() => AspNetTestHost.For(_web), Throws.Exception);
+                File.WriteAllLines(flagFile, new string[] { previousCopiedFile });
+                File.WriteAllText(previousCopiedFile, "tmp");
+
+                using (AspNetTestHost.For(_web))
+                {
+                    File.Exists(previousCopiedFile).Should().BeFalse("should clean previously copied files");
+                }
             }
             finally
             {
+                File.Delete(previousCopiedFile);
                 File.Delete(flagFile);
             }
         }
