@@ -13,7 +13,7 @@
         {
             var method = _element.AttributeOrEmpty("method");
             var action = _element.AttributeOrEmpty("action");
-            var form = new TypedForm<T>(method, action);
+            var form = new TypedForm<T>(_element, method, action);
             AddInputs(form);
             return form;
         }

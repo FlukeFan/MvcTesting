@@ -7,17 +7,20 @@ namespace MvcTesting.Html
 {
     public class TypedForm<T>
     {
+        protected   ElementWrapper      _element;
         protected   string              _method;
         protected   string              _action;
         protected   IList<FormValue>    _formValues     = new List<FormValue>();
         protected   IList<SubmitValue>  _submitValues   = new List<SubmitValue>();
 
-        public TypedForm(string method = "", string action = "")
+        public TypedForm(ElementWrapper element = null, string method = "", string action = "")
         {
+            _element = element;
             SetMethod(method);
             SetAction(action);
         }
 
+        public ElementWrapper           Element         { get { return _element; } }
         public string                   Method          { get { return _method; } }
         public string                   Action          { get { return _action; } }
         public IEnumerable<FormValue>   FormValues      { get { return _formValues; } }

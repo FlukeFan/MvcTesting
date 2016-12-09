@@ -10,6 +10,16 @@ namespace MvcTesting.Tests.Html
     public class FormScraperTests
     {
         [Test]
+        public void AllowsAccessToElement()
+        {
+            var html = "<form id='a_form'></form>";
+
+            var form = new Response { Text = html }.Form<FormModel>();
+
+            form.Element.Id.Should().Be("a_form");
+        }
+
+        [Test]
         public void AllowsMissingValues()
         {
             var html = @"
