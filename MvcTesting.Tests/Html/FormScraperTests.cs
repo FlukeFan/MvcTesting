@@ -108,6 +108,7 @@ namespace MvcTesting.Tests.Html
                 <form>
                     <input type='radio' name='r_noValue_checked' checked />
                     <input type='radio' name='r_value_notChecked' value='123' />
+                    <input type='radio' name='r_value_notChecked' value='234' />
                 </form>
             ";
 
@@ -116,7 +117,7 @@ namespace MvcTesting.Tests.Html
             form.GetSingle("r_noValue_checked").Value.Should().Be("on");
             form.GetSingle("r_noValue_checked").Send.Should().BeTrue();
 
-            form.GetSingle("r_value_notChecked").Value.Should().Be("123");
+            form.GetSingle("r_value_notChecked").ConfinedValues.Should().BeEquivalentTo("123", "234");
             form.GetSingle("r_value_notChecked").Send.Should().BeFalse();
         }
 
