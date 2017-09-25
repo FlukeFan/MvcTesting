@@ -46,9 +46,8 @@ namespace MvcTesting.Tests.Html
             var form = new Response { Text = html }.Form<FormModel>();
 
             var formValues = form.Get("Name");
-            formValues.Length.Should().Be(2);
-            formValues[0].Value.Should().Be("value1");
-            formValues[1].Value.Should().Be("value2");
+            formValues.Length.Should().Be(1);
+            formValues[0].ConfinedValues.Should().BeEquivalentTo("value1", "value2");
         }
 
         [Test]

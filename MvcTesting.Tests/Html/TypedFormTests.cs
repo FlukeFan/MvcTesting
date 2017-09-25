@@ -31,6 +31,7 @@ namespace MvcTesting.Tests.Html
         }
 
         [Test]
+        [Ignore("Until we decide what to do with multiple values with the same name")]
         public void GetSingle_MultipleMatch_ThrowsError()
         {
             var html = @"
