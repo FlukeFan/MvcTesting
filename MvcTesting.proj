@@ -62,11 +62,13 @@
 
   <ItemGroup>
     <ProjectsToBuild Include="MvcTesting\MvcTesting.csproj"/>
+    <ProjectsToBuild Include="MvcTesting.StubApp\MvcTesting.StubApp.csproj"/>
     <ProjectsToBuild Include="MvcTesting.Tests\MvcTesting.Tests.csproj"/>
   </ItemGroup>
 
   <ItemGroup>
     <ProjectsToClean Include="MvcTesting.Tests\MvcTesting.Tests.csproj"/>
+    <ProjectsToClean Include="MvcTesting.StubApp\MvcTesting.StubApp.csproj"/>
     <ProjectsToClean Include="MvcTesting\MvcTesting.csproj"/>
   </ItemGroup>
 
