@@ -17,6 +17,10 @@
     <MSBuildXsd Include="lib\MSBuild\*.xsd" />
   </ItemGroup>
 
+  <Target Name="RestorePackages">
+    <Exec Command="lib\NuGet\NuGet.exe restore" />
+  </Target>
+
   <Target Name="Init">
     <CreateProperty Value="Configuration=$(Configuration);RunTests=$(RunTests)">
       <Output TaskParameter="Value" PropertyName="GlobalProperties" />

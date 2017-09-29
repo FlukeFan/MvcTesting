@@ -1,4 +1,6 @@
 
+[![Build Status](https://ci.appveyor.com/api/projects/status/github/FlukeFan/MvcTesting?svg=true)](https://ci.appveyor.com/project/FlukeFan/MvcTesting) <pre>
+
 MvcTesting
 ==========
 

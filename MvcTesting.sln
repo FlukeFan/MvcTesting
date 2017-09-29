@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcTesting", "MvcTesting\MvcTesting.csproj", "{D978D4CE-502D-4328-BBCC-696C7F1465E8}"
 EndProject
@@ -11,7 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Items", "Items", "{4F4EE83C
 		CommandPrompt.bat = CommandPrompt.bat
 		LICENSE.txt = LICENSE.txt
 		MvcTesting.proj = MvcTesting.proj
-		readme.txt = readme.txt
+		readme.md = readme.md
 		RunNUnit.bat = RunNUnit.bat
 	EndProjectSection
 EndProject
@@ -48,5 +48,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C912E23F-9E39-46AC-BEBC-77395C72FC85}
 	EndGlobalSection
 EndGlobal
