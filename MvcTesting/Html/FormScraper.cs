@@ -22,10 +22,10 @@ namespace MvcTesting.Html
 
         protected virtual void AddInputs<T>(TypedForm<T> form)
         {
-            var formInputs = _element.FindAll("input, select, textarea");
+            var formInputs = _element.FindAll("input, select, textarea, button");
 
             var submits = formInputs.Where(i => IsSubmit(i));
-            var inputs = formInputs.Where(i => !IsSubmit(i));
+            var inputs = formInputs.Where(i => IsInput(i));
 
             foreach (var submit in submits)
                 AddSubmit(form, submit);
@@ -39,10 +39,21 @@ namespace MvcTesting.Html
         protected virtual bool IsSubmit(ElementWrapper formInput)
         {
             var tagName = formInput.TagName.ToLower();
-            var type = formInput.AttributeOrEmpty("type").ToLower();
+            var type = formInput.AttributeOrEmpty("type")?.ToLower();
 
-            return tagName == "input"
-                && (type == "submit" || type == "image");
+            var isInputSubmit = tagName == "input" && (type == "submit" || (type == "image"));
+            var isButtonSubmit = tagName == "button" && (string.IsNullOrWhiteSpace(type) || type == "submit");
+
+            return isInputSubmit || isButtonSubmit;
+        }
+
+        protected virtual bool IsInput(ElementWrapper formInput)
+        {
+            if (IsSubmit(formInput))
+                return false;
+
+            var tagName = formInput.TagName.ToLower();
+            return tagName != "button";
         }
 
         protected virtual void AddSubmit<T>(TypedForm<T> form, ElementWrapper inputSubmit)

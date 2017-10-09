@@ -169,12 +169,15 @@ namespace MvcTesting.Tests.Html
                     <input type='submit' name='NoValue' />
                     <input type='submit' name='SubmitName' value='Submit Value' />
                     <input type='image'  name='ImageName'  value='Image Value'  />
+                    <button>button</button>
+                    <button type='submit'>buttonsubmit</button>
+                    <button type='button'>notsubmit</button>
                 </form>
             ";
 
             var form = new Response { Text = html }.Form<FormModel>();
 
-            form.SubmitValues.Count().Should().Be(4);
+            form.SubmitValues.Count().Should().Be(6);
 
             {
                 var sb = form.SubmitValues.ElementAt(0);
@@ -194,6 +197,14 @@ namespace MvcTesting.Tests.Html
                 var sb = form.SubmitValues.ElementAt(3);
                 sb.Name.Should().Be("ImageName");
                 sb.Value.Should().Be("Image Value");
+            }
+            {
+                var sb = form.SubmitValues.ElementAt(4);
+                sb.Name.Should().Be("");
+            }
+            {
+                var sb = form.SubmitValues.ElementAt(5);
+                sb.Name.Should().Be("");
             }
         }
     }
