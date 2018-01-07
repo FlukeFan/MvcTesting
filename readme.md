@@ -4,8 +4,7 @@
 MvcTesting
 ==========
 
-A library to test (pre core) Asp.Net Mvc applications from request through to (HTML) response.
-Heavily based on http://blog.stevensanderson.com/2009/06/11/integration-testing-your-aspnet-mvc-application/
+A library to test Asp.Net Core Mvc application forms from request through to (HTML) response.
 
 Building
 ========
@@ -14,7 +13,11 @@ To build, open CommandPrompt.bat, and type 'b'.
 
 Build commands:
 
-b                               : build
-b /t:clean                      : clean
-b /t:setApiKey /p:apiKey=[key]  : set the api key
-b /t:push                       : Push packages to NuGet and publish them (setApiKey before running this)
+br                                      Restore dependencies (execute this first)
+b                                       Dev-build
+bw                                      Watch dev-build
+bt <test>                               Run tests with filter Name~<test>
+btw <test>                              Watch run tests with filter Name~<test>
+bc                                      Clean the build outputs
+b /t:setApiKey /p:apiKey=[key]          Set the NuGet API key
+b /t:push                               Push packages to NuGet and publish them (setApiKey before running this)
