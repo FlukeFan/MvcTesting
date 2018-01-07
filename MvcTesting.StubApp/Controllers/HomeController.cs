@@ -20,7 +20,6 @@ namespace MvcTesting.StubApp.Controllers
             model.ContentType = Request.ContentType;
 
             var requestInput = Request.Body;
-            requestInput.Position = 0;
             using (var sr = new StreamReader(requestInput))
                 model.Content = sr.ReadToEnd();
 
