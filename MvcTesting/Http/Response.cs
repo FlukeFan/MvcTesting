@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using AngleSharp.Parser.Html;
+using Microsoft.AspNetCore.Mvc;
 using MvcTesting.Html;
 
 namespace MvcTesting.Http
@@ -29,7 +30,7 @@ namespace MvcTesting.Http
         public string           Text;
 
         [NonSerialized]
-        public object LastResult;
+        public IActionResult    LastResult;
 
         public HttpStatusCode   HttpStatusCode  { get { return (HttpStatusCode)StatusCode; } }
         public DocumentWrapper  Doc             { get { return _documentWrapper.Value; } }
