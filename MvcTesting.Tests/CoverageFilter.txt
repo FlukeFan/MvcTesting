@@ -1,3 +1,0 @@
--[MvcTesting]MvcTesting.Hosting.SerializableDelegate*
--[MvcTesting]MvcTesting.Http*
--[App_*]*

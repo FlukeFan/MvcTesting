@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Web.Mvc;
 using FluentAssertions;
+using Microsoft.AspNetCore.Mvc;
 using MvcTesting.Http;
 using NUnit.Framework;
 
@@ -22,9 +22,9 @@ namespace MvcTesting.Tests.Http
         [Test]
         public void ActionResultOf_WhenActionResultNull_Throws()
         {
-            var response = new Response { LastResult = new ResultExecutedContext { Result = null } };
+            var response = new Response { LastResult = new { } };
 
-            var e = Assert.Throws<Exception>(() => response.ActionResultOf<ActionResult>());
+            var e = Assert.Throws<Exception>(() => response.ActionResultOf<IActionResult>());
 
             e.Message.Should().Be("Expected ActionResult, but got <null>");
         }
@@ -32,9 +32,9 @@ namespace MvcTesting.Tests.Http
         [Test]
         public void ActionResultOf_WhenIncorrectType_Throws()
         {
-            var response = new Response { LastResult = new ResultExecutedContext { Result = new FileContentResult(new byte[0], "content-type") } };
+            var response = new Response { LastResult = new { } };
 
-            var e = Assert.Throws<Exception>(() => response.ActionResultOf<FilePathResult>());
+            var e = Assert.Throws<Exception>(() => response.ActionResultOf<IActionResult>());
 
             e.Message.Should().Be("Expected FilePathResult, but got FileContentResult");
         }
