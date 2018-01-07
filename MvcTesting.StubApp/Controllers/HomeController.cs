@@ -1,5 +1,6 @@
 ﻿using System.IO;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Http.Extensions;
+using Microsoft.AspNetCore.Mvc;
 
 namespace MvcTesting.StubApp.Controllers
 {
@@ -14,11 +15,11 @@ namespace MvcTesting.StubApp.Controllers
         {
             var model = new RawFormModel();
 
-            model.Url = Request.RawUrl;
-            model.HttpMethod = Request.HttpMethod;
+            model.Url = Request.GetDisplayUrl();
+            model.HttpMethod = Request.Method;
             model.ContentType = Request.ContentType;
 
-            var requestInput = Request.InputStream;
+            var requestInput = Request.Body;
             requestInput.Position = 0;
             using (var sr = new StreamReader(requestInput))
                 model.Content = sr.ReadToEnd();
