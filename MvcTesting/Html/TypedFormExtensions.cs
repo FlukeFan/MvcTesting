@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq.Expressions;
-using System.Web.Mvc;
 
 namespace MvcTesting.Html
 {
@@ -21,7 +20,8 @@ namespace MvcTesting.Html
 
         public static string FormName(LambdaExpression property)
         {
-            return ExpressionHelper.GetExpressionText(property);
+            //return ExpressionHelper.GetExpressionText(property);
+            return "Fake it - just to get to compile for now";
         }
     }
 }

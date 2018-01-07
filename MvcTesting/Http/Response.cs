@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Net;
-using System.Web.Mvc;
 using AngleSharp.Parser.Html;
 using MvcTesting.Html;
 
@@ -30,7 +29,7 @@ namespace MvcTesting.Http
         public string           Text;
 
         [NonSerialized]
-        public ResultExecutedContext LastResult;
+        public object LastResult;
 
         public HttpStatusCode   HttpStatusCode  { get { return (HttpStatusCode)StatusCode; } }
         public DocumentWrapper  Doc             { get { return _documentWrapper.Value; } }
@@ -39,15 +38,15 @@ namespace MvcTesting.Http
         public TypedForm<T> Form<T>(int index)          { return Doc.Form<T>(index); }
         public TypedForm<T> Form<T>(string cssSelector) { return Doc.Form<T>(cssSelector); }
 
-        public ActionResult ActionResult()
+        public object ActionResult()
         {
             if (LastResult == null)
                 throw new Exception("Expected ActionResult, but got no result from global filter CaptureResultFilter");
 
-            return LastResult.Result;
+            return "fake it - just to get to compile";// LastResult.Result;
         }
 
-        public T ActionResultOf<T>() where T : ActionResult
+        public T ActionResultOf<T>() where T : class
         {
             var actionResult = ActionResult();
 

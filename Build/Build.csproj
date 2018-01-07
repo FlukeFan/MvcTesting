@@ -35,15 +35,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-<!--    <ProjectsToBuild Include="..\MvcTesting\*.csproj" />
-    <ProjectsToBuild Include="..\MvcTesting.StubApp\*.csproj" />
+    <ProjectsToBuild Include="..\MvcTesting\*.csproj" />
+<!--    <ProjectsToBuild Include="..\MvcTesting.StubApp\*.csproj" />
     <ProjectsToBuild Include="..\MvcTesting.Tests\*.csproj" />-->
   </ItemGroup>
 
   <ItemGroup>
 <!--    <ProjectsToClean Include="..\MvcTesting.Tests\*.csproj" />
-    <ProjectsToClean Include="..\MvcTesting.StubApp\*.csproj" />
-    <ProjectsToClean Include="..\MvcTesting\*.csproj" />-->
+    <ProjectsToClean Include="..\MvcTesting.StubApp\*.csproj" />-->
+    <ProjectsToClean Include="..\MvcTesting\*.csproj" />
   </ItemGroup>
 
   <Target Name="Init">
