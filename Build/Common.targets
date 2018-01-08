@@ -18,14 +18,14 @@
     <OpenCoverExe>$(NuGetPackageRoot)OpenCover\4.6.519\tools\OpenCover.Console.exe</OpenCoverExe>
     <VsTestConsole>$(MSBuildExtensionsPath)vstest.console.dll</VsTestConsole>
     <NUnitConsole>$(NuGetPackageRoot)nunit.consolerunner\3.7.0\tools\nunit3-console.exe</NUnitConsole>
-    <ReportGeneratorExe>$(NuGetPackageRoot)reportgenerator\3.0.2\tools\ReportGenerator.exe</ReportGeneratorExe>
+    <ReportGeneratorExe>$(NuGetPackageRoot)reportgenerator\3.1.1\tools\ReportGenerator.exe</ReportGeneratorExe>
 
     <Asterisk>%2A</Asterisk>
     <TestAssembly>$(AssemblyName).dll</TestAssembly>
     <TestSuccessFlag>$(AssemblyName).success.flg</TestSuccessFlag>
     <CoverageOutput>$(AssemblyName).coverage.xml</CoverageOutput>
     <CoverFilterFileOption Condition="!Exists('CoverageFilter.txt')"></CoverFilterFileOption>
-    <CoverFilterFileOption Condition="Exists('CoverageFilter.txt')">-filterfile:CoverageFilter.txt</CoverFilterFileOption>
+    <CoverFilterFileOption Condition="Exists('CoverageFilter.txt')">-filterfile:&quot;$(MSBuildProjectDirectory)\CoverageFilter.txt&quot;</CoverFilterFileOption>
 
   </PropertyGroup>
 

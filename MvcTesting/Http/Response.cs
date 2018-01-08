@@ -6,7 +6,6 @@ using MvcTesting.Html;
 
 namespace MvcTesting.Http
 {
-    [Serializable]
     public class Response
     {
         public static Func<HtmlParser> NewParser = () => new HtmlParser();

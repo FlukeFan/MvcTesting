@@ -4,7 +4,7 @@ namespace MvcTesting.StubApp.Controllers
 {
     public class StubController : Controller
     {
-        public virtual IActionResult ViewRequest()
+        public IActionResult ViewRequest()
         {
             var model = new ViewRequestModel
             {
