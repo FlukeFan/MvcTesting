@@ -5,6 +5,7 @@
 *.suo
 *.sln.cache
 /.vs
+/.vscode
 
 /_output
 /Build/MvcTesting.VisualState.xml

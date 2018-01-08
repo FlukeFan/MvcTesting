@@ -6,12 +6,12 @@ namespace MvcTesting.StubApp.Controllers
 {
     public class HomeController : Controller
     {
-        public virtual ActionResult Index()
+        public virtual IActionResult Index()
         {
             return View();
         }
 
-        public ActionResult RawForm()
+        public IActionResult RawForm()
         {
             var model = new RawFormModel();
 

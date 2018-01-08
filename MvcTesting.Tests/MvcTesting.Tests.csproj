@@ -25,6 +25,10 @@
     </Reference>
   </ItemGroup>
 
+  <ItemGroup>
+    <TestDependencies Include="..\MvcTesting.StubApp\**\*.cshtml" />
+  </ItemGroup>
+
   <Target Name="After_Build" AfterTargets="Build">
     <CallTarget Targets="RunTests" />
   </Target>

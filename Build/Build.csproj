@@ -17,6 +17,7 @@
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.DotNet.Watcher.Tools" Version="2.0.0" />
     <Watch Include="..\**\*.cs" />
+    <Watch Include="..\**\*.cshtml" />
     <Watch Include="..\**\*.csproj" />
     <Watch Include="..\**\*.targets" />
   </ItemGroup>
