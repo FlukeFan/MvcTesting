@@ -10,6 +10,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MvcTesting.StubApp", "MvcTe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MvcTesting.Tests", "MvcTesting.Tests\MvcTesting.Tests.csproj", "{5A535EBE-A293-48E7-AD48-9286ACD3169E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "root", "root", "{DC055ED8-F2C3-4DD7-8BCE-BF2BCD147313}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		CommandPrompt.bat = CommandPrompt.bat
+		readme.md = readme.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
