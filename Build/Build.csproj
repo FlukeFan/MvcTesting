@@ -93,8 +93,7 @@
   </Target>
 
   <Target Name="PushPackages">
-    <Exec Command="$(NuGetExe) push ..\SimpleFacade\bin\$(Configuration)\SimpleFacade.$(Version).nupkg -Source nuget.org -NonInteractive" />
-    <Exec Command="$(NuGetExe) push ..\SimpleFacade.Testing\bin\$(Configuration)\SimpleFacade.Testing.$(Version).nupkg -Source nuget.org -NonInteractive" />
+    <Exec Command="$(NuGetExe) push ..\MvcTesting\bin\$(Configuration)\MvcTesting.$(Version).nupkg -Source nuget.org -NonInteractive" />
   </Target>
 
 </Project>
