@@ -10,7 +10,6 @@ namespace MvcTesting.Http
     {
         public static Func<HtmlParser> NewParser = () => new HtmlParser();
 
-        [NonSerialized]
         private Lazy<DocumentWrapper> _documentWrapper;
 
         public Response()
@@ -21,14 +20,12 @@ namespace MvcTesting.Http
                 var doc = parser.Parse(Text);
                 return new DocumentWrapper(doc);
             });
-
         }
 
         public int              StatusCode;
         public string           StatusDescription;
         public string           Text;
 
-        [NonSerialized]
         public IActionResult    LastResult;
 
         public HttpStatusCode   HttpStatusCode  { get { return (HttpStatusCode)StatusCode; } }
@@ -43,15 +40,12 @@ namespace MvcTesting.Http
             if (LastResult == null)
                 throw new Exception("Expected ActionResult, but got no result from global filter CaptureResultFilter");
 
-            return "fake it - just to get to compile";// LastResult.Result;
+            return LastResult;
         }
 
         public T ActionResultOf<T>() where T : class
         {
             var actionResult = ActionResult();
-
-            if (actionResult == null)
-                throw new Exception("Expected ActionResult, but got <null>");
 
             var result = (actionResult as T);
 

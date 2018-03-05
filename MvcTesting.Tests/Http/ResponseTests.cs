@@ -20,25 +20,13 @@ namespace MvcTesting.Tests.Http
         }
 
         [Test]
-        [Ignore("Need to put filter in place to capture results")]
-        public void ActionResultOf_WhenActionResultNull_Throws()
-        {
-            var response = new Response { LastResult = null };
-
-            var e = Assert.Throws<Exception>(() => response.ActionResultOf<IActionResult>());
-
-            e.Message.Should().Be("Expected ActionResult, but got <null>");
-        }
-
-        [Test]
-        [Ignore("Need to put filter in place to capture results")]
         public void ActionResultOf_WhenIncorrectType_Throws()
         {
             var response = new Response { LastResult = new FileContentResult(new byte[0], "text/plain") };
 
             var e = Assert.Throws<Exception>(() => response.ActionResultOf<ContentResult>());
 
-            e.Message.Should().Be("Expected FilePathResult, but got FileContentResult");
+            e.Message.Should().Be("Expected ContentResult, but got FileContentResult");
         }
     }
 }

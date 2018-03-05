@@ -23,6 +23,7 @@ namespace MvcTesting.AspNetCore
 
             return new Response
             {
+                LastResult = CaptureResultFilter.LastResult.Result,
                 Text = text,
             };
         }
