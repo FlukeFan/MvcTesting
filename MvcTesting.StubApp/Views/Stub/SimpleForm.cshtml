@@ -1,0 +1,12 @@
+﻿@model MvcTesting.StubApp.Views.Stub.SimpleFormModel
+
+<form method="post">
+    <input type="hidden" name="Id" value="@Model.Id" />
+    <p>
+        <label for="Text">Text</label>
+        <input type="text" id="Text" name="Text" value="@Model.Text" />
+    </p>
+    <p>
+        <button type="submit">Submit</button>
+    </p>
+</form>
