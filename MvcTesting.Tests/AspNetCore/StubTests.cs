@@ -40,6 +40,16 @@ namespace MvcTesting.Tests.AspNetCore
         }
 
         [Test]
+        public async Task ViewRequest_POST()
+        {
+            var client = _testServer.MvcTestingClient();
+
+            var response = await client.PostAsync("/Stub/ViewRequest");
+
+            response.Text.Should().Contain("Method=POST");
+        }
+
+        [Test]
         public async Task LastResult()
         {
             var client = _testServer.MvcTestingClient();

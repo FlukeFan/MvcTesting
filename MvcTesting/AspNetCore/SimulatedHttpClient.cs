@@ -17,15 +17,34 @@ namespace MvcTesting.AspNetCore
 
         public async Task<Response> GetAsync(string url)
         {
-            var response = await _testServer.CreateClient().GetAsync(url);
-
-            var text = await response.Content.ReadAsStringAsync();
-
-            return new Response
+            using (var client = _testServer.CreateClient())
             {
-                LastResult = CaptureResultFilter.LastResult.Result,
-                Text = text,
-            };
+                var response = await client.GetAsync(url);
+
+                var text = await response.Content.ReadAsStringAsync();
+
+                return new Response
+                {
+                    LastResult = CaptureResultFilter.LastResult.Result,
+                    Text = text,
+                };
+            }
+        }
+
+        public async Task<Response> PostAsync(string url)
+        {
+            using (var client = _testServer.CreateClient())
+            {
+                var response = await client.PostAsync(url, null);
+
+                var text = await response.Content.ReadAsStringAsync();
+
+                return new Response
+                {
+                    LastResult = CaptureResultFilter.LastResult.Result,
+                    Text = text,
+                };
+            }
         }
 
         Response ISimulatedHttpClient.Process(Request request, Action<Request> modifier)
