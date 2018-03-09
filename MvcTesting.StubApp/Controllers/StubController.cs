@@ -20,7 +20,16 @@ namespace MvcTesting.StubApp.Controllers
         [HttpPost]
         public IActionResult SimpleForm(SimpleFormModel model)
         {
-            return Content("Not implemented yet");
+            if (model.Text == "success")
+                return Redirect("success");
+            else
+                return View(model.SetError("Please enter 'success'"));
+        }
+
+        [HttpGet]
+        public IActionResult Success()
+        {
+            return View();
         }
 
         public IActionResult ViewRequest()
