@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using MvcTesting.Html;
 using MvcTesting.Http;
 
@@ -8,10 +9,10 @@ namespace MvcTesting.Tests.Html
     {
         public Request Request;
 
-        public Response Process(Request request, Action<Request> modifier)
+        public Task<Response> Process(Request request, Action<Request> modifier)
         {
             Request = request;
-            return null;
+            return Task.FromResult<Response>(null);
         }
 
         public static Request Do(string html, Action<TypedForm<FormModel>, FakeClient> submit)

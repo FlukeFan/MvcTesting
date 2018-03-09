@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.TestHost;
 using MvcTesting.Html;
@@ -47,9 +48,24 @@ namespace MvcTesting.AspNetCore
             }
         }
 
-        Response ISimulatedHttpClient.Process(Request request, Action<Request> modifier)
+        async Task<Response> ISimulatedHttpClient.Process(Request request, Action<Request> modifier)
         {
-            throw new NotImplementedException();
+            using (var client = _testServer.CreateClient())
+            {
+                var method = new HttpMethod(request.Verb);
+                var netRequest = new HttpRequestMessage(method, request.Url);
+
+                var netResponse = await client.SendAsync(netRequest);
+                var text = await netResponse.Content.ReadAsStringAsync();
+
+                var response = new Response
+                {
+                    LastResult = CaptureResultFilter.LastResult.Result,
+                    Text = text,
+                };
+
+                return response;
+            }
         }
     }
 }

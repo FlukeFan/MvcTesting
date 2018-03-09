@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Threading.Tasks;
 using MvcTesting.Http;
 
 namespace MvcTesting.Html
 {
     public interface ISimulatedHttpClient
     {
-        Response Process(Request request, Action<Request> modifier);
+        Task<Response> Process(Request request, Action<Request> modifier);
     }
 }

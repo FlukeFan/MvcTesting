@@ -74,6 +74,8 @@ namespace MvcTesting.Tests.AspNetCore
             var form = page.Form<SimpleFormModel>();
 
             form.GetSingle("Text").Value.Should().Be("existing");
+
+            await form.Submit(client);
         }
     }
 }

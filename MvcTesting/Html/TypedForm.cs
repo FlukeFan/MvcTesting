@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using MvcTesting.Http;
 
 namespace MvcTesting.Html
@@ -78,27 +79,27 @@ namespace MvcTesting.Html
             return this;
         }
 
-        public Response Submit(ISimulatedHttpClient client, Action<Request> modifier = null)
+        public Task<Response> Submit(ISimulatedHttpClient client, Action<Request> modifier = null)
         {
             var submit = SingleSubmit("Could not find single submit", _submitValues);
             return Submit(submit, client, modifier);
         }
 
-        public Response SubmitValue(string value, ISimulatedHttpClient client, Action<Request> modifier = null)
+        public Task<Response> SubmitValue(string value, ISimulatedHttpClient client, Action<Request> modifier = null)
         {
             var submitsWithValue = _submitValues.Where(sv => sv.Value == value).ToList();
             var submit = SingleSubmit("Could not find submit with value " + value, submitsWithValue);
             return Submit(submit, client, modifier);
         }
 
-        public Response SubmitName(string name, ISimulatedHttpClient client, Action<Request> modifier = null)
+        public Task<Response> SubmitName(string name, ISimulatedHttpClient client, Action<Request> modifier = null)
         {
             var submitsWithName = _submitValues.Where(sv => sv.Name == name).ToList();
             var submit = SingleSubmit("Could not find submit with name " + name, submitsWithName);
             return Submit(submit, client, modifier);
         }
 
-        public Response Submit(SubmitValue submit, ISimulatedHttpClient client, Action<Request> modifier = null)
+        public Task<Response> Submit(SubmitValue submit, ISimulatedHttpClient client, Action<Request> modifier = null)
         {
             var request = new Request(Action, Method);
             AddFormValues(request);
