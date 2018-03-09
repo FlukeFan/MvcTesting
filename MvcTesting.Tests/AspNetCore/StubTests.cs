@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.TestHost;
 using MvcTesting.AspNetCore;
 using MvcTesting.StubApp.Controllers;
+using MvcTesting.StubApp.Views.Stub;
 using NUnit.Framework;
 
 namespace MvcTesting.Tests.AspNetCore
@@ -62,6 +63,17 @@ namespace MvcTesting.Tests.AspNetCore
             lastResult.Should().BeOfType<ViewResult>();
             var model = (ViewRequestModel)(lastResult as ViewResult).Model as ViewRequestModel;
             model.Method.Should().Be("GET");
+        }
+
+        [Test]
+        public async Task SimpleFormGet()
+        {
+            var client = _testServer.MvcTestingClient();
+
+            var page = await client.GetAsync("/Stub/SimpleForm");
+            var form = page.Form<SimpleFormModel>();
+
+            form.GetSingle("Text").Value.Should().Be("existing");
         }
     }
 }
