@@ -21,7 +21,7 @@ namespace MvcTesting.StubApp.Controllers
         public IActionResult SimpleForm(SimpleFormModel model)
         {
             if (model.Text == "success")
-                return Redirect("success");
+                return Redirect("~/Stub/Success");
             else
                 return View(model.SetError("Please enter 'success'"));
         }

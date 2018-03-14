@@ -22,7 +22,7 @@ namespace MvcTesting.Http
             });
         }
 
-        public int              StatusCode;
+        public HttpStatusCode   StatusCode;
         public string           StatusDescription;
         public string           Text;
 

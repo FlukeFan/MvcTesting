@@ -1,9 +1,11 @@
-﻿using System.Threading.Tasks;
+﻿using System.Net;
+using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.TestHost;
 using MvcTesting.AspNetCore;
+using MvcTesting.Html;
 using MvcTesting.StubApp.Controllers;
 using MvcTesting.StubApp.Views.Stub;
 using NUnit.Framework;
@@ -76,6 +78,23 @@ namespace MvcTesting.Tests.AspNetCore
             form.GetSingle("Text").Value.Should().Be("existing");
 
             await form.Submit(client);
+        }
+
+        [Test]
+        public async Task SimpleFormSubmit()
+        {
+            var client = _testServer.MvcTestingClient();
+
+            var page = await client.GetAsync("/Stub/SimpleForm");
+            var form = page.Form<SimpleFormModel>();
+
+            var response = await form
+                .SetText(m => m.Text, "success")
+                .Submit(client);
+
+            response.HttpStatusCode.Should().Be(HttpStatusCode.Redirect);
+            var result = response.ActionResultOf<RedirectResult>();
+            result.Url.Should().Be("~/Stub/Success");
         }
     }
 }

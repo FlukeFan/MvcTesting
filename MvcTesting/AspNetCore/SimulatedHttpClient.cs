@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using Microsoft.AspNetCore.TestHost;
 using MvcTesting.Html;
 using MvcTesting.Http;
@@ -35,18 +37,38 @@ namespace MvcTesting.AspNetCore
             using (var client = _testServer.CreateClient())
             {
                 var method = new HttpMethod(request.Verb);
-                var netRequest = new HttpRequestMessage(method, request.Url);
 
-                var netResponse = await client.SendAsync(netRequest);
-                var text = await netResponse.Content.ReadAsStringAsync();
-
-                var response = new Response
+                using (var netRequest = new HttpRequestMessage(method, request.Url))
                 {
-                    LastResult = CaptureResultFilter.LastResult.Result,
-                    Text = text,
-                };
+                    if (request.Verb == "POST" && request.FormValues != null)
+                    {
+                        var sb = new StringBuilder();
 
-                return response;
+                        foreach (var formValue in request.FormValues)
+                            sb.AppendFormat("{0}={1}&", HttpUtility.UrlEncode(formValue.Name), HttpUtility.UrlEncode(formValue.Value));
+
+                        var encodedFormValues = sb.ToString();
+                        var formBytes = Encoding.UTF8.GetBytes(encodedFormValues);
+                        netRequest.Content = new ByteArrayContent(formBytes);
+
+                        foreach (string name in request.Headers)
+                            netRequest.Content.Headers.Add(name, request.Headers[name]);
+                    }
+
+                    using (var netResponse = await client.SendAsync(netRequest))
+                    {
+                        var text = await netResponse.Content.ReadAsStringAsync();
+
+                        var response = new Response
+                        {
+                            LastResult = CaptureResultFilter.LastResult?.Result,
+                            StatusCode = netResponse.StatusCode,
+                            Text = text,
+                        };
+
+                        return response;
+                    }
+                }
             }
         }
     }
