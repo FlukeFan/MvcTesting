@@ -61,6 +61,7 @@ namespace MvcTesting.AspNetCore
 
                         var response = new Response
                         {
+                            Client = this,
                             LastResult = CaptureResultFilter.LastResult?.Result,
                             StatusCode = netResponse.StatusCode,
                             Text = text,

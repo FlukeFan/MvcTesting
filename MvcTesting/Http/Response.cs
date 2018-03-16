@@ -22,18 +22,19 @@ namespace MvcTesting.Http
             });
         }
 
-        public HttpStatusCode   StatusCode;
-        public string           StatusDescription;
-        public string           Text;
+        public ISimulatedHttpClient Client;
+        public HttpStatusCode       StatusCode;
+        public string               StatusDescription;
+        public string               Text;
 
-        public IActionResult    LastResult;
+        public IActionResult        LastResult;
 
-        public HttpStatusCode   HttpStatusCode  { get { return (HttpStatusCode)StatusCode; } }
-        public DocumentWrapper  Doc             { get { return _documentWrapper.Value; } }
+        public HttpStatusCode       HttpStatusCode  { get { return (HttpStatusCode)StatusCode; } }
+        public DocumentWrapper      Doc             { get { return _documentWrapper.Value; } }
 
-        public TypedForm<T> Form<T>()                   { return Doc.Form<T>(); }
-        public TypedForm<T> Form<T>(int index)          { return Doc.Form<T>(index); }
-        public TypedForm<T> Form<T>(string cssSelector) { return Doc.Form<T>(cssSelector); }
+        public TypedForm<T> Form<T>()                   { return Doc.Form<T>().SetClient(Client); }
+        public TypedForm<T> Form<T>(int index)          { return Doc.Form<T>(index).SetClient(Client); }
+        public TypedForm<T> Form<T>(string cssSelector) { return Doc.Form<T>(cssSelector).SetClient(Client); }
 
         public object ActionResult()
         {

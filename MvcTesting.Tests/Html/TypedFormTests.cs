@@ -145,7 +145,7 @@ namespace MvcTesting.Tests.Html
             ";
 
             var request = FakeClient.Do(html, (form, client) =>
-                form.Submit(client));
+                form.Submit());
 
             request.Url.Should().Be("/test");
             request.Verb.Should().Be("GET");
@@ -168,7 +168,7 @@ namespace MvcTesting.Tests.Html
             ";
 
             var request = FakeClient.Do(html, (form, client) =>
-                form.Submit(client));
+                form.Submit());
 
             request.FormValues.ShouldBeEquivalentTo(new NameValue[]
             {
@@ -186,7 +186,7 @@ namespace MvcTesting.Tests.Html
             ";
 
             var request = FakeClient.Do(html, (form, client) =>
-                form.Submit(new SubmitValue(), client));
+                form.Submit(new SubmitValue()));
 
             request.FormValues.ShouldBeEquivalentTo(new NameValue[]
             {
@@ -201,7 +201,7 @@ namespace MvcTesting.Tests.Html
 
             var e = Assert.Throws<Exception>(() =>
                 FakeClient.Do(html, (form, client) =>
-                    form.Submit(client)));
+                    form.Submit()));
 
             e.Message.Should().Be("Could not find single submit: count=0 ");
         }
@@ -218,7 +218,7 @@ namespace MvcTesting.Tests.Html
 
             var e = Assert.Throws<Exception>(() =>
                 FakeClient.Do(html, (form, client) =>
-                    form.Submit(client)));
+                    form.Submit()));
 
             e.Message.Should().Be("Could not find single submit: count=2 (Submit1=Value1), (Submit2=Value2)");
         }
@@ -234,7 +234,7 @@ namespace MvcTesting.Tests.Html
             ";
 
             var request = FakeClient.Do(html, (form, client) =>
-                form.SubmitValue("Value2", client));
+                form.SubmitValue("Value2"));
 
             request.FormValues.ShouldBeEquivalentTo(new NameValue[]
             {
@@ -254,7 +254,7 @@ namespace MvcTesting.Tests.Html
 
             Assert.Throws<Exception>(() =>
                 FakeClient.Do(html, (form, client) =>
-                    form.SubmitValue("Value3", client)));
+                    form.SubmitValue("Value3")));
         }
 
         [Test]
@@ -269,7 +269,7 @@ namespace MvcTesting.Tests.Html
 
             Assert.Throws<Exception>(() =>
                 FakeClient.Do(html, (form, client) =>
-                    form.SubmitValue("Value1", client)));
+                    form.SubmitValue("Value1")));
         }
 
         [Test]
@@ -283,7 +283,7 @@ namespace MvcTesting.Tests.Html
             ";
 
             var request = FakeClient.Do(html, (form, client) =>
-                form.SubmitName("Submit2", client));
+                form.SubmitName("Submit2"));
 
             request.FormValues.ShouldBeEquivalentTo(new NameValue[]
             {

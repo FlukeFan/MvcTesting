@@ -77,7 +77,7 @@ namespace MvcTesting.Tests.AspNetCore
 
             form.GetSingle("Text").Value.Should().Be("existing");
 
-            await form.Submit(client);
+            await form.Submit();
         }
 
         [Test]
@@ -90,7 +90,7 @@ namespace MvcTesting.Tests.AspNetCore
 
             var response = await form
                 .SetText(m => m.Text, "success")
-                .Submit(client);
+                .Submit();
 
             response.HttpStatusCode.Should().Be(HttpStatusCode.Redirect);
             var result = response.ActionResultOf<RedirectResult>();

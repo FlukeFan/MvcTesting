@@ -4,18 +4,20 @@ namespace MvcTesting.Html
 {
     public class FormScraper
     {
-        protected ElementWrapper    _element;
+        protected ElementWrapper        _element;
+        protected ISimulatedHttpClient  _client;
 
-        public FormScraper(ElementWrapper element)
+        public FormScraper(ElementWrapper element, ISimulatedHttpClient client = null)
         {
             _element = element;
+            _client = client;
         }
 
         public virtual TypedForm<T> Scrape<T>()
         {
             var method = _element.AttributeOrEmpty("method");
             var action = _element.AttributeOrEmpty("action");
-            var form = new TypedForm<T>(_element, method, action);
+            var form = new TypedForm<T>(_client, _element, method, action);
             AddInputs(form);
             return form;
         }

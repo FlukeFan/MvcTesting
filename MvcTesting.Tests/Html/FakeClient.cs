@@ -19,6 +19,7 @@ namespace MvcTesting.Tests.Html
         {
             var form = new Response { Text = html }.Form<FormModel>();
             var client = new FakeClient();
+            form.SetClient(client);
 
             submit(form, client);
 
