@@ -15,7 +15,7 @@ namespace MvcTesting.Tests.Html
             return Task.FromResult<Response>(null);
         }
 
-        public static Request Do(string html, Action<TypedForm<FormModel>, FakeClient> submit)
+        public static async Task<Request> Do(string html, Action<TypedForm<FormModel>, FakeClient> submit)
         {
             var form = new Response { Text = html }.Form<FormModel>();
             var client = new FakeClient();
@@ -23,7 +23,7 @@ namespace MvcTesting.Tests.Html
 
             submit(form, client);
 
-            return client.Request;
+            return await Task.FromResult(client.Request);
         }
     }
 }

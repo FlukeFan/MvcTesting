@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using FluentAssertions;
 using MvcTesting.Html;
 using MvcTesting.Http;
@@ -135,7 +136,7 @@ namespace MvcTesting.Tests.Html
         }
 
         [Test]
-        public void Submit_SingleSubmit()
+        public async Task Submit_SingleSubmit()
         {
             var html = @"
                 <form action='/test' method='get'>
@@ -144,7 +145,7 @@ namespace MvcTesting.Tests.Html
                 </form>
             ";
 
-            var request = FakeClient.Do(html, (form, client) =>
+            var request = await FakeClient.Do(html, (form, client) =>
                 form.Submit());
 
             request.Url.Should().Be("/test");
@@ -158,7 +159,7 @@ namespace MvcTesting.Tests.Html
         }
 
         [Test]
-        public void Submit_SingleSubmitWithoutName()
+        public async Task Submit_SingleSubmitWithoutName()
         {
             var html = @"
                 <form action='/test' method='get'>
@@ -167,7 +168,7 @@ namespace MvcTesting.Tests.Html
                 </form>
             ";
 
-            var request = FakeClient.Do(html, (form, client) =>
+            var request = await FakeClient.Do(html, (form, client) =>
                 form.Submit());
 
             request.FormValues.ShouldBeEquivalentTo(new NameValue[]
@@ -177,7 +178,7 @@ namespace MvcTesting.Tests.Html
         }
 
         [Test]
-        public void Submit_NoButton()
+        public async Task Submit_NoButton()
         {
             var html = @"
                 <form action='/test' method='get'>
@@ -185,7 +186,7 @@ namespace MvcTesting.Tests.Html
                 </form>
             ";
 
-            var request = FakeClient.Do(html, (form, client) =>
+            var request = await FakeClient.Do(html, (form, client) =>
                 form.Submit(new SubmitValue()));
 
             request.FormValues.ShouldBeEquivalentTo(new NameValue[]
@@ -199,7 +200,7 @@ namespace MvcTesting.Tests.Html
         {
             var html = "<form/>";
 
-            var e = Assert.Throws<Exception>(() =>
+            var e = Assert.ThrowsAsync<Exception>(() =>
                 FakeClient.Do(html, (form, client) =>
                     form.Submit()));
 
@@ -216,7 +217,7 @@ namespace MvcTesting.Tests.Html
                 </form>
             ";
 
-            var e = Assert.Throws<Exception>(() =>
+            var e = Assert.ThrowsAsync<Exception>(() =>
                 FakeClient.Do(html, (form, client) =>
                     form.Submit()));
 
@@ -224,7 +225,7 @@ namespace MvcTesting.Tests.Html
         }
 
         [Test]
-        public void SubmitValue()
+        public async Task SubmitValue()
         {
             var html = @"
                 <form action='/test' method='get'>
@@ -233,7 +234,7 @@ namespace MvcTesting.Tests.Html
                 </form>
             ";
 
-            var request = FakeClient.Do(html, (form, client) =>
+            var request = await FakeClient.Do(html, (form, client) =>
                 form.SubmitValue("Value2"));
 
             request.FormValues.ShouldBeEquivalentTo(new NameValue[]
@@ -252,7 +253,7 @@ namespace MvcTesting.Tests.Html
                 </form>
             ";
 
-            Assert.Throws<Exception>(() =>
+            Assert.ThrowsAsync<Exception>(() =>
                 FakeClient.Do(html, (form, client) =>
                     form.SubmitValue("Value3")));
         }
@@ -267,13 +268,13 @@ namespace MvcTesting.Tests.Html
                 </form>
             ";
 
-            Assert.Throws<Exception>(() =>
+            Assert.ThrowsAsync<Exception>(() =>
                 FakeClient.Do(html, (form, client) =>
                     form.SubmitValue("Value1")));
         }
 
         [Test]
-        public void SubmitName()
+        public async Task SubmitName()
         {
             var html = @"
                 <form action='/test' method='get'>
@@ -282,7 +283,7 @@ namespace MvcTesting.Tests.Html
                 </form>
             ";
 
-            var request = FakeClient.Do(html, (form, client) =>
+            var request = await FakeClient.Do(html, (form, client) =>
                 form.SubmitName("Submit2"));
 
             request.FormValues.ShouldBeEquivalentTo(new NameValue[]
