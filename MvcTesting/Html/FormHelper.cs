@@ -1,10 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using MvcTesting.Http;
 
 namespace MvcTesting.Html
 {
     public static class FormHelper
     {
+        public static async Task<TypedForm<T>> Form<T>(this Task<Response> response)
+        {
+            return (await response).Form<T>();
+        }
+
+        public static async Task<TypedForm<T>> Form<T>(this Task<Response> response, int index)
+        {
+            return (await response).Form<T>(index);
+        }
+
+        public static async Task<TypedForm<T>> Form<T>(this Task<Response> response, string cssSelector)
+        {
+            return (await response).Form<T>(cssSelector);
+        }
+
         public static Func<ElementWrapper, FormScraper> NewScraper = ew => new FormScraper(ew);
 
         public static TypedForm<T> Scrape<T>(DocumentWrapper doc)
