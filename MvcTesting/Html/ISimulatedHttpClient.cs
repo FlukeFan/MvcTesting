@@ -8,6 +8,6 @@ namespace MvcTesting.Html
     public interface ISimulatedHttpClient
     {
         Task<Response>      Process(Request request, Action<Request> modifier);
-        IList<FakeCookie>   Cookies { get; }
+        IList<TestCookie>   Cookies { get; }
     }
 }

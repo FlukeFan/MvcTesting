@@ -10,7 +10,7 @@ namespace MvcTesting.Tests.Html
     {
         public Request Request;
 
-        public IList<FakeCookie> Cookies => throw new NotImplementedException("cookies not required yet");
+        public IList<TestCookie> Cookies => throw new NotImplementedException("cookies not required yet");
 
         public Task<Response> Process(Request request, Action<Request> modifier)
         {

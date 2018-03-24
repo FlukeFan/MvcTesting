@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.TestHost;
 using MvcTesting.AspNetCore;
 using MvcTesting.Html;
+using MvcTesting.Http;
 using MvcTesting.StubApp.Controllers;
 using MvcTesting.StubApp.Views.Stub;
 using NUnit.Framework;
@@ -107,12 +108,12 @@ namespace MvcTesting.Tests.AspNetCore
 
             client.Cookies.ShouldBeEquivalentTo(new[]
             {
-                new FakeCookie { Name = "a", Value = "2" },
-                new FakeCookie { Name = "b", Value = "3" },
+                new TestCookie { Name = "a", Value = "2" },
+                new TestCookie { Name = "b", Value = "3" },
             });
 
             client.Cookies.RemoveAt(0);
-            client.Cookies.Add(new FakeCookie { Name = "c", Value = "4" });
+            client.Cookies.Add(new TestCookie { Name = "c", Value = "4" });
 
             var response = await client.GetAsync("/Stub/GetCookies");
 

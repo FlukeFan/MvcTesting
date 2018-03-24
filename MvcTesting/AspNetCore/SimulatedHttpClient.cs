@@ -13,14 +13,14 @@ namespace MvcTesting.AspNetCore
     public class SimulatedHttpClient : ISimulatedHttpClient
     {
         private TestServer          _testServer;
-        private IList<FakeCookie>   _cookies    = new List<FakeCookie>();
+        private IList<TestCookie>   _cookies    = new List<TestCookie>();
 
         public SimulatedHttpClient(TestServer testServer)
         {
             _testServer = testServer;
         }
 
-        public IList<FakeCookie> Cookies => _cookies;
+        public IList<TestCookie> Cookies => _cookies;
 
         public Task<Response> GetAsync(string url)
         {
@@ -53,7 +53,7 @@ namespace MvcTesting.AspNetCore
         {
             foreach (var headerValue in headerValues)
             {
-                var cookie = FakeCookie.Parse(headerValue);
+                var cookie = TestCookie.Parse(headerValue);
                 cookie.Update(_cookies);
             }
         }
@@ -81,7 +81,7 @@ namespace MvcTesting.AspNetCore
                             netRequest.Content.Headers.Add(name, request.Headers[name]);
                     }
 
-                    var cookieHeader = FakeCookie.CookieHeader(_cookies);
+                    var cookieHeader = TestCookie.CookieHeader(_cookies);
 
                     if (!string.IsNullOrWhiteSpace(cookieHeader))
                         netRequest.Headers.Add("Cookie", cookieHeader);

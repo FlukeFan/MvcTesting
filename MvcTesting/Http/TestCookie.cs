@@ -1,20 +1,20 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace MvcTesting.Html
+namespace MvcTesting.Http
 {
-    public class FakeCookie
+    public class TestCookie
     {
         public string Name;
         public string Value;
 
-        public static FakeCookie Parse(string headerValue)
+        public static TestCookie Parse(string headerValue)
         {
             var parts = ParseParts(headerValue);
-            return new FakeCookie(parts);
+            return new TestCookie(parts);
         }
 
-        public static string CookieHeader(IList<FakeCookie> cookies)
+        public static string CookieHeader(IList<TestCookie> cookies)
         {
             var cookieValues = cookies
                 .Select(c => $"{c.Name}={c.Value}");
@@ -23,15 +23,15 @@ namespace MvcTesting.Html
             return header;
         }
 
-        public FakeCookie() { }
+        public TestCookie() { }
 
-        public FakeCookie(IDictionary<string, string> values)
+        public TestCookie(IDictionary<string, string> values)
         {
             Name = values["Name"];
             Value = values["Value"];
         }
 
-        public void Update(IList<FakeCookie> cookies)
+        public void Update(IList<TestCookie> cookies)
         {
             cookies.Add(this);
         }
