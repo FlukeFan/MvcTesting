@@ -14,6 +14,15 @@ namespace MvcTesting.Html
             return new FakeCookie(parts);
         }
 
+        public static string CookieHeader(IList<FakeCookie> cookies)
+        {
+            var cookieValues = cookies
+                .Select(c => $"{c.Name}={c.Value}");
+
+            var header = string.Join("; ", cookieValues);
+            return header;
+        }
+
         public FakeCookie() { }
 
         public FakeCookie(IDictionary<string, string> values)

@@ -42,11 +42,22 @@ namespace MvcTesting.StubApp.Controllers
             return View(model);
         }
 
-        public IActionResult SetCookie()
+        public IActionResult SetCookies()
         {
             Response.Cookies.Append("a", "2");
             Response.Cookies.Append("b", "3");
             return Content("done");
+        }
+
+        public IActionResult GetCookies()
+        {
+            var text = "";
+
+            foreach (var cookie in Request.Cookies)
+                text += $"{cookie.Key}={cookie.Value};";
+
+            text = text == "" ? "none" : text.TrimEnd(';');
+            return Content(text);
         }
     }
 }

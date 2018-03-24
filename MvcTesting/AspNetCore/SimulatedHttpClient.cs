@@ -81,6 +81,11 @@ namespace MvcTesting.AspNetCore
                             netRequest.Content.Headers.Add(name, request.Headers[name]);
                     }
 
+                    var cookieHeader = FakeCookie.CookieHeader(_cookies);
+
+                    if (!string.IsNullOrWhiteSpace(cookieHeader))
+                        netRequest.Headers.Add("Cookie", cookieHeader);
+
                     using (var netResponse = await client.SendAsync(netRequest))
                     {
                         var text = await netResponse.Content.ReadAsStringAsync();

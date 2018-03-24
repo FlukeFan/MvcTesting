@@ -103,13 +103,20 @@ namespace MvcTesting.Tests.AspNetCore
             var client = _testServer.MvcTestingClient();
             client.Cookies.Count.Should().Be(0);
 
-            await client.GetAsync("/Stub/SetCookie");
+            await client.GetAsync("/Stub/SetCookies");
 
             client.Cookies.ShouldBeEquivalentTo(new[]
             {
                 new FakeCookie { Name = "a", Value = "2" },
                 new FakeCookie { Name = "b", Value = "3" },
             });
+
+            client.Cookies.RemoveAt(0);
+            client.Cookies.Add(new FakeCookie { Name = "c", Value = "4" });
+
+            var response = await client.GetAsync("/Stub/GetCookies");
+
+            response.Text.Should().Be("b=3;c=4");
         }
     }
 }
