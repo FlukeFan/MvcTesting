@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,12 +12,15 @@ namespace MvcTesting.AspNetCore
 {
     public class SimulatedHttpClient : ISimulatedHttpClient
     {
-        private TestServer _testServer;
+        private TestServer          _testServer;
+        private IList<FakeCookie>   _cookies    = new List<FakeCookie>();
 
         public SimulatedHttpClient(TestServer testServer)
         {
             _testServer = testServer;
         }
+
+        public IList<FakeCookie> Cookies => _cookies;
 
         public Task<Response> GetAsync(string url)
         {
@@ -30,6 +34,28 @@ namespace MvcTesting.AspNetCore
             var request = new Request(url, "POST");
 
             return (this as ISimulatedHttpClient).Process(request, null);
+        }
+
+        private void ProcessCookies(HttpResponseMessage netResponse)
+        {
+            foreach (var header in netResponse.Headers)
+            {
+                switch (header.Key)
+                {
+                    case "Set-Cookie":
+                        ParseCookies(header.Value);
+                        break;
+                }
+            }
+        }
+
+        private void ParseCookies(IEnumerable<string> headerValues)
+        {
+            foreach (var headerValue in headerValues)
+            {
+                var cookie = FakeCookie.Parse(headerValue);
+                cookie.Update(_cookies);
+            }
         }
 
         async Task<Response> ISimulatedHttpClient.Process(Request request, Action<Request> modifier)
@@ -58,6 +84,7 @@ namespace MvcTesting.AspNetCore
                     using (var netResponse = await client.SendAsync(netRequest))
                     {
                         var text = await netResponse.Content.ReadAsStringAsync();
+                        ProcessCookies(netResponse);
 
                         var response = new Response
                         {

@@ -41,5 +41,12 @@ namespace MvcTesting.StubApp.Controllers
 
             return View(model);
         }
+
+        public IActionResult SetCookie()
+        {
+            Response.Cookies.Append("a", "2");
+            Response.Cookies.Append("b", "3");
+            return Content("done");
+        }
     }
 }

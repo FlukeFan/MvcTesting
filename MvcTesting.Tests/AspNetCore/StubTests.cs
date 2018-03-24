@@ -96,5 +96,20 @@ namespace MvcTesting.Tests.AspNetCore
             var result = response.ActionResultOf<RedirectResult>();
             result.Url.Should().Be("~/Stub/Success");
         }
+
+        [Test]
+        public async Task Cookies()
+        {
+            var client = _testServer.MvcTestingClient();
+            client.Cookies.Count.Should().Be(0);
+
+            await client.GetAsync("/Stub/SetCookie");
+
+            client.Cookies.ShouldBeEquivalentTo(new[]
+            {
+                new FakeCookie { Name = "a", Value = "2" },
+                new FakeCookie { Name = "b", Value = "3" },
+            });
+        }
     }
 }

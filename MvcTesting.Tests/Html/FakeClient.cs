@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using MvcTesting.Html;
 using MvcTesting.Http;
@@ -8,6 +9,8 @@ namespace MvcTesting.Tests.Html
     public class FakeClient : ISimulatedHttpClient
     {
         public Request Request;
+
+        public IList<FakeCookie> Cookies => throw new NotImplementedException("cookies not required yet");
 
         public Task<Response> Process(Request request, Action<Request> modifier)
         {
