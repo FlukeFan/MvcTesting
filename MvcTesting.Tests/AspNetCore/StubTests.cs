@@ -22,6 +22,7 @@ namespace MvcTesting.Tests.AspNetCore
         public void SetUpFixture()
         {
             _testServer = new WebHostBuilder()
+                .UseEnvironment("Development")
                 .UseContentRoot(@"..\..\..\..\MvcTesting.StubApp")
                 .UseStartup<FakeStartup>()
                 .MvcTestingTestServer();
@@ -118,6 +119,20 @@ namespace MvcTesting.Tests.AspNetCore
             var response = await client.GetAsync("/Stub/GetCookies");
 
             response.Text.Should().Be("b=3;c=4");
+        }
+
+        [Test]
+        public void CatchesInternalErrors()
+        {
+            var client = _testServer.MvcTestingClient();
+
+            var e = Assert.ThrowsAsync<InternalServerErrorException>(async () =>
+            {
+                await client.GetAsync("/Stub/Throw");
+            });
+
+            e.Message.Should().Contain("thrown from stub");
+            e.Message.Should().NotContain("&#x", "html entities/tags should have been stripped out of the response");
         }
     }
 }

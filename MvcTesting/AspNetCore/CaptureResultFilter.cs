@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc.Filters;
+﻿using System;
+using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace MvcTesting.AspNetCore
 {
     public class CaptureResultFilter : ActionFilterAttribute
     {
         public static ResultExecutedContext LastResult;
+        public static Exception             LastException;
+        public static bool                  LastExceptionHandled;
 
         public override void OnResultExecuted(ResultExecutedContext context)
         {
@@ -12,6 +15,9 @@ namespace MvcTesting.AspNetCore
 
             if (context != null)
                 LastResult = context;
+
+            LastException = context.Exception;
+            LastExceptionHandled = context.ExceptionHandled;
         }
     }
 }

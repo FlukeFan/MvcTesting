@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -98,6 +99,12 @@ namespace MvcTesting.AspNetCore
                             StatusCode = netResponse.StatusCode,
                             Text = text,
                         };
+
+                        var error = netResponse.StatusCode == HttpStatusCode.InternalServerError
+                            || (CaptureResultFilter.LastException != null && !CaptureResultFilter.LastExceptionHandled);
+
+                        if (error)
+                            throw new InternalServerErrorException(response, CaptureResultFilter.LastException);
 
                         return response;
                     }

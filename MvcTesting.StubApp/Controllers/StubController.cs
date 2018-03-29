@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
 using MvcTesting.StubApp.Views.Stub;
 
 namespace MvcTesting.StubApp.Controllers
@@ -58,6 +59,11 @@ namespace MvcTesting.StubApp.Controllers
 
             text = text == "" ? "none" : text.TrimEnd(';');
             return Content(text);
+        }
+
+        public IActionResult Throw()
+        {
+            throw new Exception("thrown from stub");
         }
     }
 }
