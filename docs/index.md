@@ -4,5 +4,5 @@
 MvcTesting is a small library that adds utility functions to test server-side MVC forms.
 
 <ul>
-    <li><a href="quickstart.html">Quickstart</a></li>
+    <li><a href="walkthrough.html">Walkthrough</a></li>
 </ul>

@@ -1,11 +1,11 @@
 
-*/bin
-*/obj
+**/bin
+**/obj
 */*.csproj.user
 *.suo
 *.sln.cache
-/.vs
-/.vscode
+**/.vs
+**/.vscode
 
 /_output
 /Build/MvcTesting.VisualState.xml
