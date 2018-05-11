@@ -14,6 +14,7 @@ Create a directory for your new application in `c:\temp\myapp:
     dotnet new mvc --auth Individual
     cd ..\web.tests
     dotnet new xunit
+    dotnet add reference ..\web\web.csproj
     dotnet add package MvcTesting
 
 Ad if you want the solution too:
