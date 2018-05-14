@@ -102,8 +102,14 @@
     <Exec Command="$(NuGetExe) push ..\MvcTesting\bin\$(Configuration)\MvcTesting.$(Version).nupkg -Source nuget.org -NonInteractive" />
   </Target>
 
-  <Target Name="ExampleTest">
+  <ItemGroup>
+    <ExampleTestBinaries Include="..\example\web.tests\bin\Debug\**\*.*" />
+  </ItemGroup>
+  
+  <Target Name="ExampleTest" Inputs="@(ExampleTestBinaries)" Outputs="..\example\web.tests\bin\Debug\test.flg">
+    <Message Text="GotToHere" />
     <MSBuild Projects="..\example\web.tests\web.tests.csproj" Targets="VSTest" />
+    <Touch Files="..\example\web.tests\bin\Debug\test.flg" AlwaysCreate="true" />
   </Target>
 
 </Project>
