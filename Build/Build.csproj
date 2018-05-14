@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk" DefaultTargets="DevBuild">
+﻿<Project Sdk="Microsoft.NET.Sdk" DefaultTargets="DevBuild">
 
   <Import Project="..\Build\Common.targets" />
 
@@ -39,9 +39,13 @@
     <ProjectsToBuild Include="..\MvcTesting\*.csproj" />
     <ProjectsToBuild Include="..\MvcTesting.StubApp\*.csproj" />
     <ProjectsToBuild Include="..\MvcTesting.Tests\*.csproj" />
+    <ProjectsToBuild Include="..\example\web\*.csproj" />
+    <ProjectsToBuild Include="..\example\web.tests\*.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectsToClean Include="..\example\web\*.csproj" />
+    <ProjectsToClean Include="..\example\web.tests\*.csproj" />
     <ProjectsToClean Include="..\MvcTesting.Tests\*.csproj" />
     <ProjectsToClean Include="..\MvcTesting.StubApp\*.csproj" />
     <ProjectsToClean Include="..\MvcTesting\*.csproj" />
@@ -59,6 +63,7 @@
 
   <Target Name="DevBuild" DependsOnTargets="Build;Init">
     <MSBuild Projects="@(ProjectsToBuild)" Properties="$(GlobalProperties)" RunEachTargetSeparately="true" StopOnFirstFailure="true" />
+    <CallTarget Targets="ExampleTest" Condition="'$(RunTests)'=='true'" />
     <Message Importance="high" Text="Build Success" />
   </Target>
 
@@ -95,6 +100,10 @@
 
   <Target Name="PushPackages">
     <Exec Command="$(NuGetExe) push ..\MvcTesting\bin\$(Configuration)\MvcTesting.$(Version).nupkg -Source nuget.org -NonInteractive" />
+  </Target>
+
+  <Target Name="ExampleTest">
+    <MSBuild Projects="..\example\web.tests\web.tests.csproj" Targets="VSTest" />
   </Target>
 
 </Project>
