@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\web\web.csproj" />
+    <ProjectReference Include="..\..\MvcTesting\MvcTesting.csproj" />
   </ItemGroup>
 
 </Project>
