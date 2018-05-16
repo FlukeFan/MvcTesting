@@ -26,7 +26,7 @@ And if you want the solution too:
 
 MvcTesting is a thin wrapper around the `Microsoft.AspNetCore.TestHost.TestServer`.  In order to get this to work,
 open the `web.tests\web.tests.csproj` and add the following section at the end.  A working example can be found
-here:  [https://github.com/FlukeFan/MvcTesting/blob/master/example/web.tests/web.tests.csproj]
+here:  (https://github.com/FlukeFan/MvcTesting/blob/master/example/web.tests/web.tests.csproj)
 
 ```xml
   <Target Name="CopyDepsFiles" AfterTargets="Build" Condition="'$(TargetFramework)'!=''">
@@ -149,7 +149,7 @@ Update the ConfigureServices in Startup.cs (in the web project) to make the Conf
 
 In order to test some parts of the AccountController, we have to stub out some dependencies
 during the tests.  Add the test doubles for `UserManagerSpy`, `SignInManagerSpy`, and `EmailSenderSpy` copied from the source code
-here:  [https://github.com/FlukeFan/MvcTesting/blob/master/example/web.tests/Doubles.cs]
+here:  <https://github.com/FlukeFan/MvcTesting/blob/master/example/web.tests/Doubles.cs>
 
 You should now be able to run your first test:
 
