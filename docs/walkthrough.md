@@ -159,6 +159,11 @@ You should now be able to run your first test:
 This test calls through the complete MVC stack to get the razor view, then scrapes the HTML result's form elements into a strongly typed model.  However, there is little or no logic in this controller action, so next we'll add a mor ambitious test.  Add the following to `AccountRegistrationTests.cs`:
 
 ```c#
+using System.Net;
+using Microsoft.AspNetCore.Mvc;
+
+...
+
         [Fact]
         public async Task WhenDetailsEntered_DisplaysExternalForm()
         {
