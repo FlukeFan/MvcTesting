@@ -26,7 +26,7 @@ And if you want the solution too:
 
 MvcTesting is a thin wrapper around the `Microsoft.AspNetCore.TestHost.TestServer`.  In order to get this to work,
 open the `web.tests\web.tests.csproj` and add the following section at the end.  A working example can be found
-here:  (https://github.com/FlukeFan/MvcTesting/blob/master/example/web.tests/web.tests.csproj)
+here:  <https://github.com/FlukeFan/MvcTesting/blob/master/example/web.tests/web.tests.csproj>
 
 ```xml
   <Target Name="CopyDepsFiles" AfterTargets="Build" Condition="'$(TargetFramework)'!=''">
@@ -144,7 +144,6 @@ Update the ConfigureServices in Startup.cs (in the web project) to make the Conf
     public virtual void ConfigureServices(IServiceCollection services)
     {
         ...
-
 ```
 
 In order to test some parts of the AccountController, we have to stub out some dependencies
@@ -157,3 +156,115 @@ You should now be able to run your first test:
     cd web.tests
     dotnet test
 
+This test calls through the complete MVC stack to get the razor view, then scrapes the HTML result's form elements into a strongly typed model.  However, there is little or no logic in this controller action, so next we'll add a mor ambitious test.  Add the following to `AccountRegistrationTests.cs`:
+
+```c#
+        [Fact]
+        public async Task WhenDetailsEntered_DisplaysExternalForm()
+        {
+            var form = await _webTest.Client()
+                .GetAsync("/Account/Register")
+                .Form<RegisterViewModel>();
+
+            var response = await form
+                .SetText(m => m.Email, "unit.test@unit.test")
+                .SetText(m => m.Password, "Un!tTestPassw0rd")
+                .SetText(m => m.ConfirmPassword, "Un!tTestPassw0rd")
+                .Submit();
+
+            Assert.Equal(HttpStatusCode.Redirect, response.StatusCode);
+
+            var result = response.ActionResultOf<RedirectToActionResult>();
+            Assert.Equal("Home", result.ControllerName);
+            Assert.Equal("Index", result.ActionName);
+
+            var actualCreatedUser = UserManagerSpy.LastCreate.Item1;
+            var actualPassword = UserManagerSpy.LastCreate.Item2;
+
+            Assert.Equal("unit.test@unit.test", actualCreatedUser.UserName);
+            Assert.Equal("unit.test@unit.test", actualCreatedUser.Email);
+            Assert.Equal("Un!tTestPassw0rd", actualPassword);
+
+            var actualEmail = EmailSenderSpy.LastSendEmail.Item1;
+            var actualSubject = EmailSenderSpy.LastSendEmail.Item2;
+            var actualMessage = EmailSenderSpy.LastSendEmail.Item3;
+
+            Assert.Equal("unit.test@unit.test", actualEmail);
+            Assert.Equal("Confirm your email", actualSubject);
+            Assert.Contains(UserManagerSpy.EmailToken, actualMessage);
+
+            var actualSignInUser = SignInManagerSpy.LastSignIn.Item1;
+            var actualPersistent = SignInManagerSpy.LastSignIn.Item2;
+
+            Assert.Same(actualCreatedUser, actualSignInUser);
+            Assert.False(actualPersistent);
+        }
+```
+
+Run the tests again and you should now have two passing tests:
+
+    cd web.tests
+    dotnet test
+
+To breakdown what's actually happening in each part of the test:
+
+
+```c#
+            var form = await _webTest.Client()
+                .GetAsync("/Account/Register")
+                .Form<RegisterViewModel>();
+```
+
+The above code 'scrapes' the HTML response into a strongly typed model.  This model
+wraps a collection of key-value pairs that can be exmained to see their contents.
+In addition, these values can be used to form an HTTP POST equivalent to
+the POST request a real browser would send when the submit button is pressed.
+
+```c#
+            var response = await form
+                .SetText(m => m.Email, "unit.test@unit.test")
+                .SetText(m => m.Password, "Un!tTestPassw0rd")
+                .SetText(m => m.ConfirmPassword, "Un!tTestPassw0rd")
+                .Submit();
+```
+
+The above code sets the form's values and posts the form back to the web-server
+as a POST request.
+
+```c#
+            Assert.Equal(HttpStatusCode.Redirect, response.StatusCode);
+
+            var result = response.ActionResultOf<RedirectToActionResult>();
+            Assert.Equal("Home", result.ControllerName);
+            Assert.Equal("Index", result.ActionName);
+```
+
+The above code checks the response is of the correct type.  Since we added the
+`CaptureResultFilter` in the `FakeStartup`, we can also examine the action result of
+the request.
+
+```c#
+            var actualCreatedUser = UserManagerSpy.LastCreate.Item1;
+            var actualPassword = UserManagerSpy.LastCreate.Item2;
+
+            Assert.Equal("unit.test@unit.test", actualCreatedUser.UserName);
+            Assert.Equal("unit.test@unit.test", actualCreatedUser.Email);
+            Assert.Equal("Un!tTestPassw0rd", actualPassword);
+
+            var actualEmail = EmailSenderSpy.LastSendEmail.Item1;
+            var actualSubject = EmailSenderSpy.LastSendEmail.Item2;
+            var actualMessage = EmailSenderSpy.LastSendEmail.Item3;
+
+            Assert.Equal("unit.test@unit.test", actualEmail);
+            Assert.Equal("Confirm your email", actualSubject);
+            Assert.Contains(UserManagerSpy.EmailToken, actualMessage);
+
+            var actualSignInUser = SignInManagerSpy.LastSignIn.Item1;
+            var actualPersistent = SignInManagerSpy.LastSignIn.Item2;
+
+            Assert.Same(actualCreatedUser, actualSignInUser);
+            Assert.False(actualPersistent);
+```
+
+Finally, because we setup `UserManagerSpy`, `SignInManagerSpy`, and `EmailSenderSpy`
+in `FakeStartup`, we can also verify the innjected dependencies were used correctly.
