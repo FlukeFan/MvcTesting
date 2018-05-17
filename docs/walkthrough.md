@@ -272,4 +272,4 @@ the request.
 ```
 
 Finally, because we setup `UserManagerSpy`, `SignInManagerSpy`, and `EmailSenderSpy`
-in `FakeStartup`, we can also verify the innjected dependencies were used correctly.
+in `FakeStartup`, we can also verify the injected dependencies were used correctly.
