@@ -5,7 +5,19 @@ This walkthrough will provide instructions to get from a generated ASP.Net Core 
 
 You only need .Net Core and a text editor.
 
-Create a directory for your new application in `c:\temp\myapp`:
+Create a directory for your new application in `c:\temp\myapp`.  This walkthrough uses
+.Net SDK 2.1.2, which generates different code to the latest version, so start
+by creating a global.json file with the following contents:
+
+```json
+{
+  "sdk": {
+    "version": "2.1.200"
+  }
+}
+```
+
+Now execute the following from a command prompt:
 
     cd c:\temp\myapp\
     mkdir web
