@@ -6,8 +6,8 @@ This walkthrough will provide instructions to get from a generated ASP.Net Core 
 You only need .Net Core and a text editor.
 
 Create a directory for your new application in `c:\temp\myapp`.  This walkthrough uses
-.Net SDK 2.1.2, which generates different code to the latest version, so start
-by creating a global.json file with the following contents:
+.Net SDK 2.1.2, which generates different code to the latest version.  So start
+by creating a `c:\temp\myApp\global.json` file with the following contents:
 
 ```json
 {
