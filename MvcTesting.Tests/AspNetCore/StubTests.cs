@@ -49,7 +49,7 @@ namespace MvcTesting.Tests.AspNetCore
         {
             var client = _testServer.MvcTestingClient();
 
-            var response = await client.PostAsync("/Stub/ViewRequest");
+            var response = await client.PostAsync("/Stub/ViewRequest", r => r.SetExpectedResponse(HttpStatusCode.OK));
 
             response.Text.Should().Contain("Method=POST");
         }
@@ -79,7 +79,7 @@ namespace MvcTesting.Tests.AspNetCore
 
             form.GetSingle("Text").Value.Should().Be("existing");
 
-            await form.Submit();
+            await form.Submit(r => r.SetExpectedResponse(HttpStatusCode.OK));
         }
 
         [Test]
@@ -133,6 +133,72 @@ namespace MvcTesting.Tests.AspNetCore
 
             e.Message.Should().Contain("thrown from stub");
             e.Message.Should().NotContain("&#x", "html entities/tags should have been stripped out of the response");
+        }
+
+        [Test]
+        public async Task DefaultGet_ReturnsResponse()
+        {
+            var client = _testServer.MvcTestingClient();
+
+            var response = await client.GetAsync($"/Stub/Code/{(int)HttpStatusCode.OK}");
+
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            response.Text.Should().Be("200");
+        }
+
+        [Test]
+        public void NonDefaultGet_Throws()
+        {
+            var client = _testServer.MvcTestingClient();
+
+            var e = Assert.ThrowsAsync<UnexpectedStatusCodeException>(async () =>
+            {
+                await client.GetAsync($"/Stub/Code/{(int)HttpStatusCode.PartialContent}");
+            });
+        }
+
+        [Test]
+        public async Task NonDefaultGet_CanModify()
+        {
+            var client = _testServer.MvcTestingClient();
+
+            var response = await client.GetAsync($"/Stub/Code/{(int)HttpStatusCode.PartialContent}", r => r.SetExpectedResponse(HttpStatusCode.PartialContent));
+
+            response.StatusCode.Should().Be(HttpStatusCode.PartialContent);
+            response.Text.Should().Be("206");
+        }
+
+        [Test]
+        public async Task DefaultPost_ReturnsResponse()
+        {
+            var client = _testServer.MvcTestingClient();
+
+            var response = await client.PostAsync($"/Stub/Code/{(int)HttpStatusCode.Redirect}");
+
+            response.StatusCode.Should().Be(HttpStatusCode.Redirect);
+            response.Text.Should().Be("302");
+        }
+
+        [Test]
+        public void NonDefaultPost_Throws()
+        {
+            var client = _testServer.MvcTestingClient();
+
+            var e = Assert.ThrowsAsync<UnexpectedStatusCodeException>(async () =>
+            {
+                await client.PostAsync($"/Stub/Code/{(int)HttpStatusCode.PartialContent}");
+            });
+        }
+
+        [Test]
+        public async Task NonDefaultPost_CanModify()
+        {
+            var client = _testServer.MvcTestingClient();
+
+            var response = await client.PostAsync($"/Stub/Code/{(int)HttpStatusCode.PartialContent}", r => r.SetExpectedResponse(HttpStatusCode.PartialContent));
+
+            response.StatusCode.Should().Be(HttpStatusCode.PartialContent);
+            response.Text.Should().Be("206");
         }
     }
 }

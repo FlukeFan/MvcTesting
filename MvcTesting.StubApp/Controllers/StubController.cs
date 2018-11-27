@@ -33,6 +33,12 @@ namespace MvcTesting.StubApp.Controllers
             return View();
         }
 
+        public IActionResult Code(int id)
+        {
+            Response.StatusCode = id;
+            return Content(id.ToString());
+        }
+
         public IActionResult ViewRequest()
         {
             var model = new ViewRequestModel

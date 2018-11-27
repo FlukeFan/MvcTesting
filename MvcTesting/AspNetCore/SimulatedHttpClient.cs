@@ -23,18 +23,18 @@ namespace MvcTesting.AspNetCore
 
         public IList<TestCookie> Cookies => _cookies;
 
-        public Task<Response> GetAsync(string url)
+        public Task<Response> GetAsync(string url, Action<Request> modifier = null)
         {
             var request = new Request(url, "GET");
 
-            return (this as ISimulatedHttpClient).Process(request, null);
+            return (this as ISimulatedHttpClient).Process(request, modifier);
         }
 
-        public Task<Response> PostAsync(string url)
+        public Task<Response> PostAsync(string url, Action<Request> modifier = null)
         {
             var request = new Request(url, "POST");
 
-            return (this as ISimulatedHttpClient).Process(request, null);
+            return (this as ISimulatedHttpClient).Process(request, modifier);
         }
 
         private void ProcessCookies(HttpResponseMessage netResponse)
@@ -61,6 +61,8 @@ namespace MvcTesting.AspNetCore
 
         async Task<Response> ISimulatedHttpClient.Process(Request request, Action<Request> modifier)
         {
+            modifier?.Invoke(request);
+
             using (var client = _testServer.CreateClient())
             {
                 var method = new HttpMethod(request.Verb);
@@ -105,6 +107,9 @@ namespace MvcTesting.AspNetCore
 
                         if (error)
                             throw new InternalServerErrorException(response, CaptureResultFilter.LastException);
+
+                        if (request.ExptectedResponse.HasValue && request.ExptectedResponse.Value != response.HttpStatusCode)
+                            throw new UnexpectedStatusCodeException(response, request.ExptectedResponse.Value);
 
                         return response;
                     }
