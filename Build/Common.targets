@@ -5,7 +5,7 @@
 
   <PropertyGroup>
 
-    <Version>0.0.2</Version>
+    <Version>0.0.3</Version>
     <Description>A library to test Asp.Net Core Mvc application forms from request through to (HTML) response.</Description>
     <PackageTags>Asp.Net Core Mvc Testing Tests Razor</PackageTags>
     <Authors>Richard Brown</Authors>
