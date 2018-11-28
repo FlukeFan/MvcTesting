@@ -168,7 +168,7 @@ You should now be able to run your first test:
     cd web.tests
     dotnet test
 
-This test calls through the complete MVC stack to get the razor view, then scrapes the HTML result's form elements into a strongly typed model.  However, there is little or no logic in this controller action, so next we'll add a mor ambitious test.  Add the following to `AccountRegistrationTests.cs`:
+This test calls through the complete MVC stack to get the razor view, then scrapes the HTML result's form elements into a strongly typed model.  However, there is little or no logic in this controller action, so next we'll add a more ambitious test.  Add the following to `AccountRegistrationTests.cs`:
 
 ```c#
 using System.Net;
