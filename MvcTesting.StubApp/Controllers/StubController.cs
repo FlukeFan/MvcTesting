@@ -44,6 +44,7 @@ namespace MvcTesting.StubApp.Controllers
             var model = new ViewRequestModel
             {
                 Method = Request.Method,
+                Query = Request.Query,
             };
 
             return View(model);

@@ -45,6 +45,16 @@ namespace MvcTesting.Tests.AspNetCore
         }
 
         [Test]
+        public async Task ViewRequest_GET_Query()
+        {
+            var client = _testServer.MvcTestingClient();
+
+            var response = await client.GetAsync("/Stub/ViewRequest?var1=val1");
+
+            response.Text.Should().Contain("var1=val1");
+        }
+
+        [Test]
         public async Task ViewRequest_POST()
         {
             var client = _testServer.MvcTestingClient();

@@ -1,7 +1,10 @@
-﻿namespace MvcTesting.StubApp.Controllers
+﻿using Microsoft.AspNetCore.Http;
+
+namespace MvcTesting.StubApp.Controllers
 {
     public class ViewRequestModel
     {
-        public string Method;
+        public string           Method;
+        public IQueryCollection Query;
     }
 }

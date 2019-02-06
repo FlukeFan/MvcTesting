@@ -6,3 +6,8 @@
 <p>
     Method=@Model.Method
 </p>
+
+@foreach (var query in Model.Query)
+{
+    <p>@query.Key=@query.Value</p>
+}

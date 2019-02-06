@@ -27,7 +27,6 @@ namespace MvcTesting.Tests.Http
         {
             var request = new Request("/test/path?p1=123&p2%26=234%2b");
 
-            request.Url.Should().Be("/test/path");
             request.Query().Should().Be("p1=123&p2%26=234%2b");
         }
 
@@ -36,7 +35,6 @@ namespace MvcTesting.Tests.Http
         {
             var request = new Request("/test/path?");
 
-            request.Url.Should().Be("/test/path");
             request.Query().Should().Be("");
         }
 

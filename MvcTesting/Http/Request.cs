@@ -24,16 +24,12 @@ namespace MvcTesting.Http
         {
             var indexOfQuery = url.IndexOf('?');
 
+            _url = url;
+
             if (indexOfQuery < 0)
-            {
-                _url = url;
                 _query = null;
-            }
             else
-            {
-                _url = url.Substring(0, indexOfQuery);
                 _query = url.Substring(indexOfQuery + 1);
-            }
 
             _verb = verb.ToUpper();
 
