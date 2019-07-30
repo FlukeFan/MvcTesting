@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
-using System.Web;
 using Microsoft.AspNetCore.TestHost;
 using MvcTesting.Html;
 using MvcTesting.Http;
@@ -69,20 +67,7 @@ namespace MvcTesting.AspNetCore
 
                 using (var netRequest = new HttpRequestMessage(method, request.Url))
                 {
-                    if (request.Verb == "POST" && request.FormValues != null)
-                    {
-                        var sb = new StringBuilder();
-
-                        foreach (var formValue in request.FormValues)
-                            sb.AppendFormat("{0}={1}&", HttpUtility.UrlEncode(formValue.Name), HttpUtility.UrlEncode(formValue.Value));
-
-                        var encodedFormValues = sb.ToString();
-                        var formBytes = Encoding.UTF8.GetBytes(encodedFormValues);
-                        netRequest.Content = new ByteArrayContent(formBytes);
-
-                        foreach (string name in request.Headers)
-                            netRequest.Content.Headers.Add(name, request.Headers[name]);
-                    }
+                    request.SetContent(netRequest);
 
                     var cookieHeader = TestCookie.CookieHeader(_cookies);
 

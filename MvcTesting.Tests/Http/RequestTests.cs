@@ -39,18 +39,6 @@ namespace MvcTesting.Tests.Http
         }
 
         [Test]
-        public void Construct_PostSetFormUrlEncoded()
-        {
-            var request = new Request("/test", "post");
-
-            request.Verb.Should().Be("POST");
-            request.ExptectedResponse.Should().Be(HttpStatusCode.Redirect);
-
-            request.Headers.Count.Should().Be(1, "the content-type header should be set");
-            request.Headers.Get("Content-Type").Should().Be("application/x-www-form-urlencoded");
-        }
-
-        [Test]
         public void Construct_EmptyExpectedResponse()
         {
             var request = new Request("/test", "PUSH");

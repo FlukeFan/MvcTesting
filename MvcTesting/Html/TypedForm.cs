@@ -14,6 +14,7 @@ namespace MvcTesting.Html
         protected   string                  _action;
         protected   IList<FormValue>        _formValues     = new List<FormValue>();
         protected   IList<SubmitValue>      _submitValues   = new List<SubmitValue>();
+        protected   IList<FileUpload>       _fileUploads    = new List<FileUpload>();
 
         public TypedForm(ISimulatedHttpClient client = null, ElementWrapper element = null, string method = "", string action = "")
         {
@@ -60,6 +61,12 @@ namespace MvcTesting.Html
             return this;
         }
 
+        public TypedForm<T> AddFile(FileUpload fileUpload)
+        {
+            _fileUploads.Add(fileUpload);
+            return this;
+        }
+
         public FormValue[] Get(string name)
         {
             return _formValues.Where(fv => fv.Name == name).ToArray();
@@ -84,6 +91,9 @@ namespace MvcTesting.Html
 
             foreach (var formValue in _formValues)
                 formValue.AddFormValue(request);
+
+            foreach (var fileUpload in _fileUploads)
+                request.AddFileUpload(fileUpload);
 
             return this;
         }

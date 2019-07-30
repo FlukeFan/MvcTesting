@@ -1,4 +1,6 @@
-﻿using System.Net;
+﻿using System.IO;
+using System.Net;
+using System.Text;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
@@ -32,6 +34,20 @@ namespace MvcTesting.Tests.AspNetCore
         public void TearDownFixture()
         {
             using (_testServer) { }
+        }
+
+        [SetUp]
+        public void SetUp()
+        {
+            if (File.Exists("stub_test.txt"))
+                File.Delete("stub_test.txt");
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            if (File.Exists("stub_test.txt"))
+                File.Delete("stub_test.txt");
         }
 
         [Test]
@@ -107,6 +123,22 @@ namespace MvcTesting.Tests.AspNetCore
             response.HttpStatusCode.Should().Be(HttpStatusCode.Redirect);
             var result = response.ActionResultOf<RedirectResult>();
             result.Url.Should().Be("~/Stub/Success");
+        }
+
+        [Test]
+        public async Task FileUpload()
+        {
+            var client = _testServer.MvcTestingClient();
+
+            var page = await client.GetAsync("/FileUpload");
+            var form = page.Form<object>();
+
+            var response = await form
+                .AddFile(new FileUpload("file", "stub_test.txt", ASCIIEncoding.ASCII.GetBytes("some content")))
+                .Submit();
+
+            File.Exists("stub_test.txt").Should().BeTrue();
+            File.ReadAllText("stub_test.txt").Should().Be("some content");
         }
 
         [Test]
