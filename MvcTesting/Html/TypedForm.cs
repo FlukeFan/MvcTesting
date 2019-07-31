@@ -29,6 +29,7 @@ namespace MvcTesting.Html
         public string                   Method          { get { return _method; } }
         public string                   Action          { get { return _action; } }
         public IEnumerable<FormValue>   FormValues      { get { return _formValues; } }
+        public IEnumerable<FileUpload>  FileUploads     { get { return _fileUploads; } }
         public IEnumerable<SubmitValue> SubmitValues    { get { return _submitValues; } }
 
         public TypedForm<T> SetClient(ISimulatedHttpClient client)
@@ -69,7 +70,12 @@ namespace MvcTesting.Html
 
         public FormValue[] Get(string name)
         {
-            return _formValues.Where(fv => fv.Name == name).ToArray();
+            return _formValues.Where(fv => fv.Name?.ToLower() == name?.ToLower()).ToArray();
+        }
+
+        public FileUpload GetFile(string name)
+        {
+            return _fileUploads.Where(fu => fu.FormName?.ToLower() == name?.ToLower()).SingleOrDefault();
         }
 
         public FormValue GetSingle(string name)
@@ -113,7 +119,7 @@ namespace MvcTesting.Html
 
         public Task<Response> SubmitName(string name, Action<Request> modifier = null)
         {
-            var submitsWithName = _submitValues.Where(sv => sv.Name == name).ToList();
+            var submitsWithName = _submitValues.Where(sv => sv.Name?.ToLower() == name?.ToLower()).ToList();
             var submit = SingleSubmit("Could not find submit with name " + name, submitsWithName);
             return Submit(submit, modifier);
         }

@@ -9,8 +9,15 @@
             Content = content;
         }
 
-        public string FormName  { get; }
-        public string FileName  { get; }
-        public byte[] Content   { get; }
+        public string FormName  { get; private set; }
+        public string FileName  { get; private set; }
+        public byte[] Content   { get; private set; }
+
+        public FileUpload SetContent(string fileName, byte[] content)
+        {
+            FileName = fileName;
+            Content = content;
+            return this;
+        }
     }
 }

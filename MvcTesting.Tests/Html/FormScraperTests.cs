@@ -161,6 +161,24 @@ namespace MvcTesting.Tests.Html
         }
 
         [Test]
+        public void File()
+        {
+            var html = @"
+                <form>
+                    <input type='text' name='t' />
+                    <input type='file' name='f' />
+                </form>
+            ";
+
+            var form = new Response { Text = html }.Form<FormModel>();
+
+            form.FormValues.Count().Should().Be(1, "should have 1 text input");
+            form.FileUploads.Count().Should().Be(1, "should have 1 file upload");
+
+            form.GetFile("f").Content.Should().BeNull();
+        }
+
+        [Test]
         public void Submit()
         {
             var html = @"

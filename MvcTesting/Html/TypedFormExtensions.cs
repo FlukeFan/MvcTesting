@@ -19,6 +19,14 @@ namespace MvcTesting.Html
             return form;
         }
 
+        public static TypedForm<T> SetFile<T>(this TypedForm<T> form, Expression<Func<T, byte[]>> property, string fileName, byte[] content)
+        {
+            var formName = FormName(property);
+            var fileUpload = form.GetFile(formName);
+            fileUpload.SetContent(fileName, content);
+            return form;
+        }
+
         public static string FormName(LambdaExpression property)
         {
             return ExpressionHelper.GetExpressionText(property);

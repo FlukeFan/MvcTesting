@@ -131,10 +131,10 @@ namespace MvcTesting.Tests.AspNetCore
             var client = _testServer.MvcTestingClient();
 
             var page = await client.GetAsync("/FileUpload");
-            var form = page.Form<object>();
+            var form = page.Form<FakeFileModel>();
 
-            var response = await form
-                .AddFile(new FileUpload("file", "stub_test.txt", ASCIIEncoding.ASCII.GetBytes("some content")))
+            await form
+                .SetFile(m => m.File, "stub_test.txt", ASCIIEncoding.ASCII.GetBytes("some content"))
                 .Submit();
 
             File.Exists("stub_test.txt").Should().BeTrue();
@@ -241,6 +241,11 @@ namespace MvcTesting.Tests.AspNetCore
 
             response.StatusCode.Should().Be(HttpStatusCode.PartialContent);
             response.Text.Should().Be("206");
+        }
+
+        private class FakeFileModel
+        {
+            public byte[] File { get; set; }
         }
     }
 }

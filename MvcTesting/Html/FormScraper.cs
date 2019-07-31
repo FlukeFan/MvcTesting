@@ -28,6 +28,7 @@ namespace MvcTesting.Html
 
             var submits = formInputs.Where(i => IsSubmit(i));
             var inputs = formInputs.Where(i => IsInput(i));
+            var fileUploads = formInputs.Where(i => IsFileUpload(i));
 
             foreach (var submit in submits)
                 AddSubmit(form, submit);
@@ -36,6 +37,9 @@ namespace MvcTesting.Html
 
             foreach (var formValue in formValues)
                 form.AddFormValue(formValue);
+
+            foreach (var fileUpload in fileUploads)
+                form.AddFile(new FileUpload(fileUpload.Attribute("name"), null, null));
         }
 
         protected virtual bool IsSubmit(ElementWrapper formInput)
@@ -55,7 +59,14 @@ namespace MvcTesting.Html
                 return false;
 
             var tagName = formInput.TagName.ToLower();
-            return tagName != "button";
+            var type = formInput.AttributeOrEmpty("type")?.ToLower();
+            return tagName != "button" && type != "file";
+        }
+
+        protected virtual bool IsFileUpload(ElementWrapper formInput)
+        {
+            var type = formInput.AttributeOrEmpty("type")?.ToLower();
+            return type == "file";
         }
 
         protected virtual void AddSubmit<T>(TypedForm<T> form, ElementWrapper inputSubmit)
