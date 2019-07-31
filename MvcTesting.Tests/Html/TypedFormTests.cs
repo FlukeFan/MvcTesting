@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using FluentAssertions;
 using MvcTesting.Html;
@@ -120,6 +121,32 @@ namespace MvcTesting.Tests.Html
             {
                 new NameValue("Name", "tst1"),
                 new NameValue("Name2", "tst2"),
+            });
+        }
+
+        [Test]
+        public void AddFormValuesUntyped()
+        {
+            var html = @"
+                <form>
+                    <input type='text' name='Name' value='form0' />
+                    <input type='file' name='Name3' />
+                </form>
+            ";
+
+            var form = new Response { Text = html }
+                .Form<FormModel>()
+                .SetText("Name", "tst1")
+                .SetFile("Name3", "tst2", Encoding.ASCII.GetBytes("tst2"));
+
+            form.FormValues.ShouldBeEquivalentTo(new FormValue[]
+            {
+                new FormValue("Name", "tst1"),
+            });
+
+            form.FileUploads.ShouldBeEquivalentTo(new FileUpload[]
+            {
+                new FileUpload("Name3", "tst2", Encoding.ASCII.GetBytes("tst2")),
             });
         }
 
