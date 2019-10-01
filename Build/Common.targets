@@ -9,9 +9,8 @@
     <Description>A library to test Asp.Net Core Mvc application forms from request through to (HTML) response.</Description>
     <PackageTags>Asp.Net Core Mvc Testing Tests Razor</PackageTags>
     <Authors>Richard Brown</Authors>
-    <PackageLicenseUrl>https://raw.githubusercontent.com/FlukeFan/MvcTesting/master/LICENSE.txt</PackageLicenseUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/FlukeFan/MvcTesting</PackageProjectUrl>
-    <PackageIconUrl>https://raw.githubusercontent.com/FlukeFan/MvcTesting/master/icon.png</PackageIconUrl>
 
     <PreserveCompilationContext Condition="$(IsTestProject)=='true'">true</PreserveCompilationContext>
     <CoverageTarget Condition="'$(CoverageTarget)'==''">70</CoverageTarget>
