@@ -23,9 +23,13 @@ namespace MvcTesting.Tests.AspNetCore
         [OneTimeSetUp]
         public void SetUpFixture()
         {
+            var contentRoot = Directory.GetCurrentDirectory().Contains("__Instrumented")
+                ? @"..\..\..\..\..\MvcTesting.StubApp"
+                : @"..\..\..\..\MvcTesting.StubApp";
+
             _testServer = new WebHostBuilder()
                 .UseEnvironment("Development")
-                .UseContentRoot(@"..\..\..\..\MvcTesting.StubApp")
+                .UseContentRoot(contentRoot)
                 .UseStartup<FakeStartup>()
                 .MvcTestingTestServer();
         }

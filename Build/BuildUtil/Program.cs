@@ -1,4 +1,4 @@
-﻿namespace Build
+﻿namespace Build.BuildUtil
 {
     class Program
     {

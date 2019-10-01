@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Build
+namespace Build.BuildUtil
 {
     public abstract class Command
     {
@@ -14,7 +14,7 @@ namespace Build
             }
             catch (Exception e)
             {
-                UsingConsoleColor(ConsoleColor.Red, () => Console.Error.WriteLine(e.Message));
+                UsingConsoleColor(ConsoleColor.Red, () => Console.Error.WriteLine($"***** {e.Message} ***** ({Environment.CurrentDirectory})"));
                 Console.Error.WriteLine(e);
                 Environment.Exit(1);
             }

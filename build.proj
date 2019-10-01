@@ -1,0 +1,22 @@
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <Import Project="Build\common.build.proj" />
+
+  <ItemGroup>
+    <ProjectsToBuild Include="MvcTesting\MvcTesting.csproj" />
+    <ProjectsToBuild Include="MvcTesting.StubApp\MvcTesting.StubApp.csproj" />
+    <ProjectsToBuild Include="MvcTesting.Tests\MvcTesting.Tests.csproj" />
+  </ItemGroup>
+
+  <Target Name="SetApiKey">
+    <Exec Command="dotnet nuget setApiKey $(apiKey) --source nuget.org" />
+  </Target>
+
+  <Target Name="Push">
+    <Exec Command="dotnet msbuild build.proj /p:RunTests=true /p:Configuration=Release" />
+    <Exec Command="dotnet nuget push MvcForms\bin\Release\MvcForms.$(Version).nupkg --source nuget.org" />
+    <Exec Command="dotnet clean build.proj" />
+    <Message Importance="high" Text="Version $(Version) pushed to nuget.org" />
+  </Target>
+
+</Project>
