@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MvcTesting.AspNetCore;
-using web.Models;
-using web.Services;
 
 namespace web.tests
 {
@@ -13,8 +12,8 @@ namespace web.tests
 
         public override void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton(typeof(UserManager<ApplicationUser>), UserManagerSpy.Instance);
-            services.AddSingleton(typeof(SignInManager<ApplicationUser>), SignInManagerSpy.Instance);
+            //services.AddSingleton(typeof(UserManager<ApplicationUser>), UserManagerSpy.Instance);
+            //services.AddSingleton(typeof(SignInManager<ApplicationUser>), SignInManagerSpy.Instance);
 
             services.AddSingleton<IEmailSender>(EmailSenderSpy.Instance);
 

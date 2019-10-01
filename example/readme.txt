@@ -1,4 +1,4 @@
-:: using .Net SDK 2.1.200
+:: using .Net SDK 3.0.100
 mkdir web
 cd web
 dotnet new mvc --auth Individual
