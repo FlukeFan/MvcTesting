@@ -153,7 +153,7 @@ namespace MvcTesting.Tests.AspNetCore
 
             await client.GetAsync("/Stub/SetCookies");
 
-            client.Cookies.ShouldBeEquivalentTo(new[]
+            client.Cookies.Should().BeEquivalentTo(new[]
             {
                 new TestCookie { Name = "a", Value = "2" },
                 new TestCookie { Name = "b", Value = "3" },

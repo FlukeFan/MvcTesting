@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,7 +12,7 @@ namespace MvcTesting.StubApp.Controllers
             return View();
         }
 
-        public IActionResult RawForm()
+        public async Task<IActionResult> RawForm()
         {
             var model = new RawFormModel();
 
@@ -21,7 +22,7 @@ namespace MvcTesting.StubApp.Controllers
 
             var requestInput = Request.Body;
             using (var sr = new StreamReader(requestInput))
-                model.Content = sr.ReadToEnd();
+                model.Content = await sr.ReadToEndAsync();
 
             return View(model);
         }

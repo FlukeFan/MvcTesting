@@ -1,5 +1,5 @@
 ﻿using System;
-using AngleSharp.Parser.Html;
+using AngleSharp.Html.Parser;
 
 namespace MvcTesting.Http
 {
@@ -19,7 +19,7 @@ namespace MvcTesting.Http
             try
             {
                 var parser = new HtmlParser();
-                var doc = parser.Parse(responseText);
+                var doc = parser.ParseDocument(responseText);
                 var body = doc.Body;
 
                 var raw = doc.QuerySelector("div.rawExceptionDetails pre");

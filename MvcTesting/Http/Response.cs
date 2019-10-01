@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Net;
-using AngleSharp.Parser.Html;
+using AngleSharp.Html.Parser;
 using Microsoft.AspNetCore.Mvc;
 using MvcTesting.Html;
 
@@ -17,7 +17,7 @@ namespace MvcTesting.Http
             _documentWrapper = new Lazy<DocumentWrapper>(() =>
             {
                 var parser = NewParser();
-                var doc = parser.Parse(Text);
+                var doc = parser.ParseDocument(Text);
                 return new DocumentWrapper(doc);
             });
         }

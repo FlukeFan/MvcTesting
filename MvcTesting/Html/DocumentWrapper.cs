@@ -1,4 +1,4 @@
-﻿using AngleSharp.Dom.Html;
+﻿using AngleSharp.Html.Dom;
 
 namespace MvcTesting.Html
 {

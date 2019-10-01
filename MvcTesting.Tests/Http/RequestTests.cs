@@ -54,7 +54,7 @@ namespace MvcTesting.Tests.Http
             request.AddFormValue("p1", "123");
             request.AddFormValue("p2", "234");
 
-            request.FormValues.ShouldBeEquivalentTo(new NameValue[]
+            request.FormValues.Should().BeEquivalentTo(new NameValue[]
             {
                 new NameValue("p1", "123"),
                 new NameValue("p2", "234"),

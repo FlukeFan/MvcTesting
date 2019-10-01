@@ -117,7 +117,7 @@ namespace MvcTesting.Tests.Html
                 .SetText(m => m.Name2, "tst2")
                 .AddFormValues(post);
 
-            post.FormValues.ShouldBeEquivalentTo(new NameValue[]
+            post.FormValues.Should().BeEquivalentTo(new NameValue[]
             {
                 new NameValue("Name", "tst1"),
                 new NameValue("Name2", "tst2"),
@@ -139,12 +139,12 @@ namespace MvcTesting.Tests.Html
                 .SetText("Name", "tst1")
                 .SetFile("Name3", "tst2", Encoding.ASCII.GetBytes("tst2"));
 
-            form.FormValues.ShouldBeEquivalentTo(new FormValue[]
+            form.FormValues.Should().BeEquivalentTo(new FormValue[]
             {
                 new FormValue("Name", "tst1"),
             });
 
-            form.FileUploads.ShouldBeEquivalentTo(new FileUpload[]
+            form.FileUploads.Should().BeEquivalentTo(new FileUpload[]
             {
                 new FileUpload("Name3", "tst2", Encoding.ASCII.GetBytes("tst2")),
             });
@@ -178,7 +178,7 @@ namespace MvcTesting.Tests.Html
             request.Url.Should().Be("/test");
             request.Verb.Should().Be("GET");
 
-            request.FormValues.ShouldBeEquivalentTo(new NameValue[]
+            request.FormValues.Should().BeEquivalentTo(new NameValue[]
             {
                 new NameValue("Name1", "Value1"),
                 new NameValue("Submit1", "Submit Value"),
@@ -198,7 +198,7 @@ namespace MvcTesting.Tests.Html
             var request = await FakeClient.Do(html, (form, client) =>
                 form.Submit());
 
-            request.FormValues.ShouldBeEquivalentTo(new NameValue[]
+            request.FormValues.Should().BeEquivalentTo(new NameValue[]
             {
                 new NameValue("Name1", "Value1"),
             });
@@ -216,7 +216,7 @@ namespace MvcTesting.Tests.Html
             var request = await FakeClient.Do(html, (form, client) =>
                 form.Submit(new SubmitValue()));
 
-            request.FormValues.ShouldBeEquivalentTo(new NameValue[]
+            request.FormValues.Should().BeEquivalentTo(new NameValue[]
             {
                 new NameValue("Name1", "Value1"),
             });
@@ -264,7 +264,7 @@ namespace MvcTesting.Tests.Html
             var request = await FakeClient.Do(html, (form, client) =>
                 form.SubmitValue("Value2"));
 
-            request.FormValues.ShouldBeEquivalentTo(new NameValue[]
+            request.FormValues.Should().BeEquivalentTo(new NameValue[]
             {
                 new NameValue("Submit", "Value2"),
             });
@@ -313,7 +313,7 @@ namespace MvcTesting.Tests.Html
             var request = await FakeClient.Do(html, (form, client) =>
                 form.SubmitName("Submit2"));
 
-            request.FormValues.ShouldBeEquivalentTo(new NameValue[]
+            request.FormValues.Should().BeEquivalentTo(new NameValue[]
             {
                 new NameValue("Submit2", "Value2"),
             });

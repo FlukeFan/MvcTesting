@@ -34,7 +34,7 @@ namespace MvcTesting.Tests.Html
             send_null.AddFormValue(request);
             send_empty.AddFormValue(request);
 
-            request.FormValues.ShouldBeEquivalentTo(new NameValue[]
+            request.FormValues.Should().BeEquivalentTo(new NameValue[]
             {
                 new NameValue("send_value", "value"),
                 new NameValue("send_null", null),
