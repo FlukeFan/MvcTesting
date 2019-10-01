@@ -1,6 +1,7 @@
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
   <Import Project="Build\common.build.proj" />
+  <Import Project="Build/common.targets" />
 
   <ItemGroup>
     <ProjectsToBuild Include="MvcTesting\MvcTesting.csproj" />
@@ -14,7 +15,7 @@
 
   <Target Name="Push">
     <Exec Command="dotnet msbuild build.proj /p:RunTests=true /p:Configuration=Release" />
-    <Exec Command="dotnet nuget push MvcForms\bin\Release\MvcForms.$(Version).nupkg --source nuget.org" />
+    <Exec Command="dotnet nuget push MvcTesting\bin\Release\MvcTesting.$(Version).nupkg --source nuget.org" />
     <Exec Command="dotnet clean build.proj" />
     <Message Importance="high" Text="Version $(Version) pushed to nuget.org" />
   </Target>
